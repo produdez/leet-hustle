@@ -1,9 +1,11 @@
 class Solution:
+    # sol note: use len and array index instead of enumerate
     def twoSum(self, nums: List[int], target: int) -> List[int]:
         bag = dict()
-        for (idx, n1) in enumerate(nums):
-            n2 = target - n1
-            if n2 in bag: 
-                return [idx, bag.get(n2)]
-            bag[n1] = idx
+        for idx in range(len(nums)):
+            number = nums[idx]
+            complement = target - number
+            if complement in bag: 
+                return [idx, bag.get(complement)]
+            bag[number] = idx
                 
