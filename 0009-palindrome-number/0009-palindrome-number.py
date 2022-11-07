@@ -1,4 +1,13 @@
 class Solution:
+    '''
+        Idea:
+        check if first digit == last digit 
+        and then take the middle part out and repeat
+        
+        # Special case is when the middlepart have trailing zeros
+        # Example: 1002011 -> mid=00201=201 -> not palin
+            but 1002001 -> mid=00200-> 200  -> stil palin
+    '''
     def isPalindrome(self, x: int) -> bool:
         def checkFirstLast(x):
             # NOTE: mag stands for magnitude order or floor(log10(x))
