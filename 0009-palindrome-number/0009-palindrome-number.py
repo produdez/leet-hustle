@@ -1,28 +1,25 @@
 class Solution:
     ''' 
-        Idea 2
-    
-        Reverse the number and check 
-        Actually, i want to reverse HALF of the number only
-        2002 -> check if 02 reversed into 20 or not
+        Update Idea 1
         
-        Also number of digit (even/odd) is a bitch
-        # NOTE: reversing head not tail to make sure not bumping into trailing zeroes!!
-        
+        still left right check 
+        but now more elegant and not care about trailing zero in mid section anymore
     '''
     def isPalindrome(self, x: int) -> bool:
-        if x<0: return False
-        if x==0: return True
+        if x < 0: return False
+        if x == 0: return True
         
-        magOrder = int(math.log10(x))
-        
-        halfMagOrder = ((magOrder+1) // 2)
-        tail = x % (10 ** halfMagOrder)
-        head =  x // (10** (magOrder + 1 - halfMagOrder))
-    
-        reversedHead = 0
-        while head != 0:
-            reversedHead = reversedHead * 10 + head % 10
-            head = head // 10
+        magnitude = 10 ** int(math.log10(x))
+        mid = x
+        while mid:
+            print(mid)
+            left = mid // magnitude
+            right = mid % 10
+            if left != right: return False
 
-        return tail == reversedHead
+            mid = (mid % magnitude) // 10
+            magnitude = magnitude // 100
+            # elegance here where your mid could be
+            # number like 0002101 with magnitude 100000 
+            # which makes the trailing 0 still valid 
+        return True
