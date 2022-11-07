@@ -18,10 +18,8 @@ class Solution:
         
         halfMagOrder = ((magOrder+1) // 2)
         tail = x % (10 ** halfMagOrder)
-        head =  (x // (10** halfMagOrder) # odd digit
-            if halfMagOrder * 2 != magOrder 
-            else x // (10 ** (halfMagOrder + 1))) # even digit
-
+        head =  x // (10** (magOrder + 1 - halfMagOrder))
+    
         reversedHead = 0
         while head != 0:
             reversedHead = reversedHead * 10 + head % 10
