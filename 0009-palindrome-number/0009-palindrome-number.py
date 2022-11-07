@@ -1,37 +1,30 @@
 class Solution:
-    '''
-        Idea:
-        check if first digit == last digit 
-        and then take the middle part out and repeat
+    ''' 
+        Idea 2
+    
+        Reverse the number and check 
+        Actually, i want to reverse HALF of the number only
+        2002 -> check if 02 reversed into 20 or not
         
-        # Special case is when the middlepart have trailing zeros
-        # Example: 1002011 -> mid=00201=201 -> not palin
-            but 1002001 -> mid=00200-> 200  -> stil palin
+        Also number of digit (even/odd) is a bitch
+        # NOTE: reversing head not tail to make sure not bumping into trailing zeroes!!
+        
     '''
     def isPalindrome(self, x: int) -> bool:
-        def checkFirstLast(x):
-            # NOTE: mag stands for magnitude order or floor(log10(x))
-            magX = int(math.log10(x))
-            last = x % 10
-            first = x // (10**magX)
-
-            if last != first: return None
-            
-            mid = (x % 10**magX) // 10
-            if mid == 0: return 0
-
-            magMid = int(math.log10(mid))
-            if magMid != magX - 2: # this case is when the mid number has 0-trailings 
-                n_trail = magX - 2 - magMid
-                # even trailing 00011000
-                if mid % (10** n_trail) == 0: return mid // (10**n_trail)
-                
-                return None # uneven trailing ex 0001011
-            return mid
-
+        if x<0: return False
         if x==0: return True
-        if x<0: return False # fuck this stupid case :)
-        while True:
-            x = checkFirstLast(x)
-            if x is None: return False
-            if x is 0: return True
+        
+        magOrder = int(math.log10(x))
+        
+        halfMagOrder = ((magOrder+1) // 2)
+        tail = x % (10 ** halfMagOrder)
+        head =  (x // (10** halfMagOrder) # odd digit
+            if halfMagOrder * 2 != magOrder 
+            else x // (10 ** (halfMagOrder + 1))) # even digit
+        print(head, tail)
+        reversedHead = 0
+        while head != 0:
+            reversedHead = reversedHead * 10 + head % 10
+            head = head // 10
+
+        return tail == reversedHead
