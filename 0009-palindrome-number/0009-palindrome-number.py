@@ -21,7 +21,7 @@ class Solution:
         head =  (x // (10** halfMagOrder) # odd digit
             if halfMagOrder * 2 != magOrder 
             else x // (10 ** (halfMagOrder + 1))) # even digit
-        print(head, tail)
+
         reversedHead = 0
         while head != 0:
             reversedHead = reversedHead * 10 + head % 10
