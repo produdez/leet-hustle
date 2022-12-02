@@ -1,11 +1,11 @@
 class Solution:
     '''
-        (not finished)
-        Solution 2: Recursive Approach
+        (have not cleaned up)
+        Solution 2.1: Recursive Approach Updated
     '''
 
     
-    def isValid(self, s: str) -> bool:
+    def isValid(self, test_string: str) -> bool:
         matching_dict = {
             '(' : ')',
             '[' : ']',
@@ -13,34 +13,31 @@ class Solution:
         }
         is_left = lambda x: x in matching_dict
         split = lambda string: (string[0], string[1:])
-
+        
         def recur_valid(open_char, s):
-            '''
-                empty string: done
-                None: fail
-                some string: remaning
-            '''
-
-            if not open_char and not s: ''
+            # print(open_char, s)
+            if not open_char and not s: return ''
             if not open_char: 
                 open_char, s = split(s)
-                if not is_left(open_char): return None
+                if not is_left(open_char): return open_char + s
                 return recur_valid(open_char, s)
-            if not s: return None
+            if not s: return open_char
 
             head, remain = split(s)
             if is_left(head): 
-                return recur_valid(
-                    open_char, 
-                    recur_valid(head, remain)
-                )
-            if matching_dict[open_char] == head: return remain
-            return None
+                matching_tail = recur_valid(head, remain)
+                if matching_tail == s:
+                    return open_char + s
+                else:
+                    return recur_valid(
+                        open_char, 
+                        matching_tail
+                    )
+            if matching_dict[open_char] == head: return recur_valid(None, remain)
+            return open_char + s
         
-        s = recur_valid(None, s)
-        while(s != None and len(s) > 0):
-            s = recur_valid(None,s)
-        return s == ''
+        # print('starting: ', test_string)
+        return recur_valid(None, test_string) == ''
 
             
             
