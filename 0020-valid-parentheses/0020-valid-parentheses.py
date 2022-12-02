@@ -1,28 +1,48 @@
 class Solution:
     '''
-        Idea: Have a stack to push non-closed left bracket into
-            - When encounter a right bracket, pop the stack and check valid
-        Notable case:
-            - Stack empty (means not enough open bracket) -> False
-            - Empty string -> True
-            - Stack not empty at the end (means not enough close bracket) -> False
+        (not finished)
+        Solution 2: Recursive Approach
     '''
-    def matches(self, left, right):
-        if left == '(' and right == ')': return True
-        if left == '[' and right == ']': return True
-        if left == '{' and right == '}': return True
-        return False
-    
-    def isLeft(self, c): return c in ['(', '[', '{']
-    def isRight(self, c): return c in [')', ']', '}'] # ! unused
 
+    
     def isValid(self, s: str) -> bool:
-        stack = [] # should be a stack
-        for char in s:
-            if self.isLeft(char): 
-                stack.append(char)
-            else:
-                if len(stack) is 0: return False
-                lastLeft = stack.pop()
-                if not self.matches(lastLeft, char): return False
-        return len(stack) is 0
+        matching_dict = {
+            '(' : ')',
+            '[' : ']',
+            '{' : '}'
+        }
+        is_left = lambda x: x in matching_dict
+        split = lambda string: (string[0], string[1:])
+
+        def recur_valid(open_char, s):
+            '''
+                empty string: done
+                None: fail
+                some string: remaning
+            '''
+
+            if not open_char and not s: ''
+            if not open_char: 
+                open_char, s = split(s)
+                if not is_left(open_char): return None
+                return recur_valid(open_char, s)
+            if not s: return None
+
+            head, remain = split(s)
+            if is_left(head): 
+                return recur_valid(
+                    open_char, 
+                    recur_valid(head, remain)
+                )
+            if matching_dict[open_char] == head: return remain
+            return None
+        
+        s = recur_valid(None, s)
+        while(s != None and len(s) > 0):
+            s = recur_valid(None,s)
+        return s == ''
+
+            
+            
+        
+        
