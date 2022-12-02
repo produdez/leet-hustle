@@ -1,7 +1,7 @@
 class Solution:
     '''
-        (have not cleaned up)
         Solution 2.1: Recursive Approach Updated
+        Formatted 
     '''
 
     
@@ -12,32 +12,42 @@ class Solution:
             '{' : '}'
         }
         is_left = lambda x: x in matching_dict
-        split = lambda string: (string[0], string[1:])
+        is_right = lambda x: not is_left(x)
+        split = lambda string: (string[0], string[1:]) 
         
-        def recur_valid(open_char, s):
-            # print(open_char, s)
-            if not open_char and not s: return ''
-            if not open_char: 
-                open_char, s = split(s)
-                if not is_left(open_char): return open_char + s
-                return recur_valid(open_char, s)
-            if not s: return open_char
+        def match_and_trim(starting_bracket: str, tail: str):
+            '''
+                Idea: You have a starting bracket and a string to match (tail) the bracket with
+                This function try to match and trim matching pairs and return the unmatched
 
-            head, remain = split(s)
-            if is_left(head): 
-                matching_tail = recur_valid(head, remain)
-                if matching_tail == s:
-                    return open_char + s
-                else:
-                    return recur_valid(
-                        open_char, 
-                        matching_tail
-                    )
-            if matching_dict[open_char] == head: return recur_valid(None, remain)
-            return open_char + s
+                If at a case that we cannot match and trim (unmatchable) we just return the full string
+            '''
+            # no string left to match -> return the start bracket
+            if not tail: return starting_bracket
+            # no starting bracket but have tail -> split and match the tail
+            if not starting_bracket: return match_and_trim(*split(tail)) 
+            # open char is right bracket -> un-matchable
+            if is_right(starting_bracket): return starting_bracket + tail
+            
+            tail_head, tail_remain = split(tail)
+            # if tail starts with a matching right bracket, keep trimming the remaining
+            if is_right(tail_head) and matching_dict[starting_bracket] == tail_head: 
+                return match_and_trim('', tail_remain)
+            
+            # else we just try to match and trim tail with itself
+            trimmed_tail = match_and_trim(tail_head, tail_remain)
+            
+            # if the tail cannot be trimmed -> unmatchable
+            if trimmed_tail == tail: return starting_bracket + tail
+
+            # continue matching the trimmed tail with current starting_bracket
+            return match_and_trim(
+                starting_bracket, 
+                trimmed_tail
+            )
         
-        # print('starting: ', test_string)
-        return recur_valid(None, test_string) == ''
+        # only case of success is when the string is matched and completely reduced to empty
+        return match_and_trim('', test_string) == ''
 
             
             
