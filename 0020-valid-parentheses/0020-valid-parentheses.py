@@ -11,8 +11,7 @@ class Solution:
             '[' : ']',
             '{' : '}'
         }
-        is_left = lambda x: x in matching_dict
-        is_right = lambda x: not is_left(x)
+        is_right = lambda x: x not in matching_dict
         split = lambda string: (string[0], string[1:]) 
         
         def match_and_trim(starting_bracket: str, tail: str):
