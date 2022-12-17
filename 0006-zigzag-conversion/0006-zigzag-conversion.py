@@ -14,14 +14,14 @@ class Solution:
             - Space complexity: mainly the container
                 O(n) or O(numRows * M) with M being the average size of each rows
         '''
-        container = ['' for _ in range(numRows)]
+        container = [[] for _ in range(numRows)]
         
         counter = 0
         increment = -1 if numRows > 1 else 0
         for char in s:
-            container[counter] += char
+            container[counter].append(char)
             
             if counter == 0 or counter == numRows - 1: increment = -increment
             counter = counter + increment
         
-        return ''.join(container)
+        return ''.join([''.join(arr) for arr in container])
