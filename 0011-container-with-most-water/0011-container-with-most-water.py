@@ -4,13 +4,11 @@ class Solution:
         rightIdx = len(heightList) - 1
         
         largestArea = 0
-        while True:
-            width = rightIdx - leftIdx
-            if width <= 0: break
+        while rightIdx - leftIdx > 0:
 
             leftH, rightH = heightList[leftIdx], heightList[rightIdx]
             height = min(leftH, rightH)
-            largestArea = max(width * height, largestArea)
+            largestArea = max((rightIdx - leftIdx) * height, largestArea)
             
             if height == leftH: leftIdx += 1
             if height == rightH: rightIdx -= 1
