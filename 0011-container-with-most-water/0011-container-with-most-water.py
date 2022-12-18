@@ -12,10 +12,8 @@ class Solution:
             height = min(leftH, rightH)
             largestArea = max(width * height, largestArea)
             
-            if height == leftH:
-                leftIdx += 1
-            else:
-                rightIdx -= 1
+            if height == leftH: leftIdx += 1
+            if height == rightH: rightIdx -= 1
         
         return largestArea 
 
