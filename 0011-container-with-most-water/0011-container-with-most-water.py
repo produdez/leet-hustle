@@ -1,6 +1,8 @@
 class Solution:
     def maxArea(self, heightList: List[int]) -> int:
         '''
+        Version 1.0
+
         Intuition:
             1. Start from outside in (meaning reducing the width slowly)
             2. Given a left_bar and a right_bar (a lower, a larger),
