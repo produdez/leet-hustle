@@ -1,11 +1,10 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
         '''
-            Version 1.1 (while loop version)
+            Version 2
             
-            Idea: get each char and convert it using a dictionary
-            Note the case of >5 and <=5
-            Also note that while loop and for loop does not have significant changes
+            Idea: Instead of looping throught the number,
+            loop the greek dictionary instead
         '''
         roman_dict = {
             1 : 'I',
@@ -24,20 +23,9 @@ class Solution:
         }
         
         roman_str = ''
-        magnitude = 10**math.floor(math.log10(num))
-        while magnitude > 0:
-            head_val = (num // magnitude) % 10
-
-            if magnitude * head_val in roman_dict: 
-                roman_str += roman_dict[magnitude * head_val]
-            else:
-                if head_val > 5:
-                    roman_str += roman_dict[5 * magnitude] 
-                    head_val -= 5
-                
-                roman_str += roman_dict[magnitude] * head_val       
-            
-            magnitude //= 10
+        for val, char in reversed(roman_dict.items()):
+            roman_str += char * (num // val)
+            num %= val
         return roman_str
             
             
