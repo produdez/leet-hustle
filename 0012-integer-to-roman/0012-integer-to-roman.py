@@ -17,11 +17,10 @@ class Solution:
         }
         
         roman_str = ''
-        # magnitude = 10 ** math.floor(math.log10(num))
-        # while magnitude > 0:
-        for magnitude in [10**i for i in range(math.floor(math.log10(num)), -1, -1)]:
-            head_val = (num // magnitude)
-            if head_val == 0: continue
+        magnitude = 10 ** math.floor(math.log10(num))
+        while magnitude > 0:
+        # for magnitude in [10**i for i in range(math.floor(math.log10(num)), -1, -1)]:
+            head_val = (num // magnitude) % 10
 
             if magnitude * head_val in roman_dict: 
                 roman_str += roman_dict[magnitude * head_val]
@@ -32,7 +31,7 @@ class Solution:
                 
                 roman_str += roman_dict[magnitude] * head_val
             
-            num = num % magnitude
+            magnitude //= 10
         
         return roman_str
             
