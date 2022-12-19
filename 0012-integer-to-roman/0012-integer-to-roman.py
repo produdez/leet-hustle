@@ -1,5 +1,12 @@
 class Solution:
     def intToRoman(self, num: int) -> str:
+        '''
+            Version 1
+            
+            Idea: get each char and convert it using a dictionary
+            Note the case of >5 and <=5
+            Also note that while loop and for loop does not have significant changes
+        '''
         roman_dict = {
             1 : 'I',
             4 : 'IV',
@@ -17,8 +24,6 @@ class Solution:
         }
         
         roman_str = ''
-        # magnitude = 10 ** math.floor(math.log10(num))
-        # while magnitude > 0:
         for magnitude in [10**i for i in range(math.floor(math.log10(num)), -1, -1)]:
             head_val = (num // magnitude) % 10
 
@@ -29,10 +34,7 @@ class Solution:
                     roman_str += roman_dict[5 * magnitude] 
                     head_val -= 5
                 
-                roman_str += roman_dict[magnitude] * head_val
-            
-            # magnitude //= 10
-        
+                roman_str += roman_dict[magnitude] * head_val        
         return roman_str
             
             
