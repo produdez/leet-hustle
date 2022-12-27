@@ -11,4 +11,4 @@ class Solution:
                 insert_index = i
                 break
             
-        return n[:insert_index+start] + str(abs(x)) + n[insert_index+start:]
+        return n[:insert_index+start] + str(x) + n[insert_index+start:]
