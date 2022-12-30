@@ -11,10 +11,8 @@ class Solution:
         
         result = 2 * n # max valid
         for i in invalid_counter:
-            
-            match len(invalid_counter[i]):
-                case 3: result -= 2
-                case 0: continue
-                case _: result -= 1
+            count = len(invalid_counter[i])
+            if count == 3: result -= 2
+            elif count > 0: result -= 1
                 
         return result
