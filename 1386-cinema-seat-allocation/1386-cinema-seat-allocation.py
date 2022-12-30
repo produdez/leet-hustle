@@ -1,6 +1,7 @@
 from pprint import pprint
 class Solution:
     def maxNumberOfFamilies(self, n: int, reservedSeats: List[List[int]]) -> int:
+        # invalid_counter = {i+1 :set() for i in range(n)}
         invalid_counter = collections.defaultdict(set)
         for row,col in reservedSeats:
             if col == 1 or col == 10: continue
@@ -10,7 +11,10 @@ class Solution:
         
         result = 2 * n # max valid
         for i in invalid_counter:
-            if len(invalid_counter[i]) == 3: result -= 2
-            else: result -= 1
             
+            match len(invalid_counter[i]):
+                case 3: result -= 2
+                case 0: continue
+                case _: result -= 1
+                
         return result
