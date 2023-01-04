@@ -1,7 +1,6 @@
 class Solution:
     '''
-        Idea: Dynamic programing
-        Build the pyramid bottom up
+        Current: naive build
     '''
     def generate(self, numRows: int) -> List[List[int]]:
         pyramid = [[1]]
