@@ -1,15 +1,14 @@
+from functools import reduce
 class Solution:
     '''
-        Current: naive build
+        Current: more optimized naive build
     '''
-    def generate(self, numRows: int) -> List[List[int]]:
-        pyramid = [[1]]
-        if numRows == 1: return pyramid
         
-        for rowNum in range(2, numRows + 1):
-            row = [1] * rowNum
-            for i in range(1, rowNum - 1): # skiping head and tail of the row
-                prevRow = pyramid[rowNum - 2]
-                row[i] = prevRow[i-1] + prevRow[i]
-            pyramid.append(row)
+    def generate(self, numRows: int) -> List[List[int]]:
+        def genNextRow(prevRow):
+            return [1] + [prevRow[i] + prevRow[i+1] for i in range(len(prevRow) - 1)] + [1]
+
+        pyramid = [[1]]
+        for _ in range(1, numRows):
+            pyramid.append(genNextRow(pyramid[-1]))
         return pyramid
