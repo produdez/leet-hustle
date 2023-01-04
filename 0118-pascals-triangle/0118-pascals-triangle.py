@@ -1,14 +1,17 @@
 from functools import reduce
 class Solution:
     '''
-        Current: more optimized naive build
+        Note: this problem is hacked by many people with hardcode, naive solution is already very good
+        
+        Current: more optimized using offset sum
     '''
         
     def generate(self, numRows: int) -> List[List[int]]:
-        def genNextRow(prevRow):
-            return [1] + [prevRow[i] + prevRow[i+1] for i in range(len(prevRow) - 1)] + [1]
-
         pyramid = [[1]]
         for _ in range(1, numRows):
-            pyramid.append(genNextRow(pyramid[-1]))
+            pyramid.append(list(map(
+                lambda a,b: a + b,
+                [0] + pyramid[-1],
+                pyramid[-1] + [0]
+            )))
         return pyramid
