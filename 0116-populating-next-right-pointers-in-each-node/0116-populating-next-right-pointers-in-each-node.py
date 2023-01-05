@@ -11,7 +11,7 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         '''
-            Version 2: best solution
+            Version 21: best solution, cleaner code
             Idea:
             
             Similar to a naive BFS solution where you use a queue to traverse 
@@ -21,20 +21,21 @@ class Solution:
             and that "right-ness" to simulate a queue (aka BFS) without ever creating one
 
         '''
-        if not root: return root        
         
-        top, level_head = root, root.left
-        while level_head:
-            level_head.next = top.right
-            curr = top.right
-            top = top.next
+        
+        curr, nxt = root, root.left if root else None
+        while curr and nxt:
+            # connect left and right of node
+            curr.left.next = curr.right
             
-            while top:
-                curr.next = top.left
-                top.left.next = top.right
-                curr = top.right
-                top = top.next
+            # connect right to the neighboring tree if any
+            if curr.next:
+                curr.right.next = curr.next.left
             
-            top = level_head
-            level_head = level_head.left
+            #shift
+            curr = curr.next # continue same level
+            if not curr: # switching level
+                curr = nxt
+                nxt = nxt.left
+            
         return root
