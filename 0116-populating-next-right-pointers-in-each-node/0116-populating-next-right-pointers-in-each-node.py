@@ -20,13 +20,14 @@ class Solution:
                 - All the outer right-most node of the left tree with all the outer left-most node of the right tree
         '''
         if not root: return root
-
         left = root.left
         right = root.right
         while left and right:
             left.next = right
             left = left.right
             right = right.left
-        self.connect(root.left)
-        self.connect(root.right)
+
+        if root.left: # since perfect tree so if have left then also have right
+            self.connect(root.left)
+            self.connect(root.right)
         return root
