@@ -11,28 +11,30 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         '''
-            Version 1.1: interative, same idea, just not recursion
+            Version 2: best solution
             Idea:
-            At every node, you have two pointers
-                1. A go right pointer on your left child (always move right)
-                2. A go left pointer on your right child (always move left)
-            These two pointer will ilterate together and connect:
-                - Left child and right child of current node
-                - All the outer right-most node of the left tree with all the outer left-most node of the right tree
+            
+            Similar to a naive BFS solution where you use a queue to traverse 
+            and link nodes from same level
+
+            Here since we have "right" pointer, we use a current and next pointer
+            and that "right-ness" to simulate a queue (aka BFS) without ever creating one
+
         '''
         if not root: return root        
-        queue = [root]
-        while queue:
-            curr = queue.pop()
-            left = curr.left
-            right = curr.right
         
-            while left and right:
-                left.next = right
-                left = left.right
-                right = right.left
-
-            if curr.left: queue.append(curr.left)
-            if curr.right: queue.append(curr.right)
-
+        top, level_head = root, root.left
+        while level_head:
+            level_head.next = top.right
+            curr = top.right
+            top = top.next
+            
+            while top:
+                curr.next = top.left
+                top.left.next = top.right
+                curr = top.right
+                top = top.next
+            
+            top = level_head
+            level_head = level_head.left
         return root
