@@ -11,6 +11,7 @@ class Node:
 class Solution:
     def connect(self, root: 'Optional[Node]') -> 'Optional[Node]':
         '''
+            Version 1.1: interative, same idea, just not recursion
             Idea:
             At every node, you have two pointers
                 1. A go right pointer on your left child (always move right)
@@ -19,15 +20,19 @@ class Solution:
                 - Left child and right child of current node
                 - All the outer right-most node of the left tree with all the outer left-most node of the right tree
         '''
-        if not root: return root
-        left = root.left
-        right = root.right
-        while left and right:
-            left.next = right
-            left = left.right
-            right = right.left
+        if not root: return root        
+        queue = [root]
+        while queue:
+            curr = queue.pop()
+            left = curr.left
+            right = curr.right
+        
+            while left and right:
+                left.next = right
+                left = left.right
+                right = right.left
 
-        if root.left: # since perfect tree so if have left then also have right
-            self.connect(root.left)
-            self.connect(root.right)
+            if curr.left: queue.append(curr.left)
+            if curr.right: queue.append(curr.right)
+
         return root
