@@ -19,7 +19,7 @@ class Solution:
             for char in s:
                 dictionary[char] = dictionary.get(char, 0) + 1
             fset = frozenset(dictionary.items())
-            return hash(fset)
+            return fset
 
         for s in strs:
             enc = encode(s)
