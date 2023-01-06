@@ -1,9 +1,11 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         '''
-            Version: 3
-            Cheat using counter
+            Version: 4
+            
+            Space - O(1): assuming sorting does not take time
+            
         '''
         if len(t) != len(s): return False
-        return Counter(t) == Counter(s)
+        return sorted(s) == sorted(t)
         
