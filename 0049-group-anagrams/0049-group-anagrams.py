@@ -9,7 +9,7 @@ class Solution:
                 Time: O(#num_str) * O(#num_char)
                 Space: O(#num_str) [since could have unique encodings] * O(#avg_m) [average unique characters]
         '''
-        groups = {}
+        groups = defaultdict(list)
         def encode(s):
             '''
                 Time: O(n) build + O(n) convert to fset and hash
@@ -22,6 +22,5 @@ class Solution:
             return fset
 
         for s in strs:
-            enc = encode(s)
-            groups[enc] = groups.get(enc, []) + [s]
+            groups[encode(s)].append(s)
         return groups.values()
