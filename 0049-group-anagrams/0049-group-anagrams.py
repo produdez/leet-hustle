@@ -1,6 +1,7 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         '''
+            Version 1
             Idea: 
                 Encode all string to a dictionary count 
                 and hash them in order to arrange into groups
