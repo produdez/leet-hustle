@@ -1,7 +1,8 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         '''
-            Version: 1
+            Version: 1.5
+                Rewrite with dict.get
             
             Idea:
             
@@ -23,17 +24,9 @@ class Solution:
         
         match = {}
         for i in range(len(s)):
-            char_s, char_t = s[i], t[i]
-            if char_s in match:
-                match[char_s] += 1
-            else:
-                match[char_s] = 1
-            
-            if char_t in match:
-                match[char_t] -= 1
-            else:
-                match[char_t] = -1
-        
+            match[s[i]] = match.get(s[i], 0) + 1
+            match[t[i]] = match.get(t[i], 0) - 1
+
         for val in match.values():
             if val != 0: return False
         return True
