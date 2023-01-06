@@ -1,7 +1,8 @@
 class Solution:
     def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
         '''
-            Version 1
+            Version 2
+                Update with array encode
             Idea: 
                 Encode all string to a dictionary count 
                 and hash them in order to arrange into groups
@@ -12,13 +13,13 @@ class Solution:
         groups = defaultdict(list)
         def encode(s):
             '''
-                Time: O(n) build + O(n) convert to fset and hash
-                Space: O(2m) dict + fset 
+                Time: O(n)
+                Space: O(1) 
             '''
-            dictionary = {}
+            count = [0] * 26
             for char in s:
-                dictionary[char] = dictionary.get(char, 0) + 1
-            return hash(frozenset(dictionary.items()))
+                count[ord(char) - 97] += 1
+            return hash(tuple(count))
 
         for s in strs:
             groups[encode(s)].append(s)
