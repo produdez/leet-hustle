@@ -1,6 +1,8 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         '''
+            Version: 1
+            
             Idea:
             
             Have a matching dicitonary that maintain the count 
