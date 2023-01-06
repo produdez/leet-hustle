@@ -1,33 +1,25 @@
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         '''
-            Version: 1.5
-                Rewrite with dict.get
+            Version: 2
             
             Idea:
-            
-            Have a matching dicitonary that maintain the count 
-            of every character
-            - char from s -> +1
-            - char from t -> -1
-            So after adding all chars, all dictionary's entry must be 0
-            
+                Build two dict and compare them
+                
             Complexity:
-            
+                Compared with ver1, better time worse space
+                But still same O(complexity)
             Time: 
-                O(n) (loop) + O(m) (check sum) -> O(n)
-                with n being #char m being #unique_chars
+                O(n) + O(1) since dict compare is O(1)
             Space:
-                O(m) for the dict
+                O(2n)
         '''
         if len(t) != len(s): return False
         
-        match = {}
+        ds, dt = {}, {}
         for i in range(len(s)):
-            match[s[i]] = match.get(s[i], 0) + 1
-            match[t[i]] = match.get(t[i], 0) - 1
-
-        for val in match.values():
-            if val != 0: return False
-        return True
+            ds[s[i]] = ds.get(s[i], 0) + 1
+            dt[t[i]] = dt.get(t[i], 0) + 1
+            
+        return ds == dt
         
