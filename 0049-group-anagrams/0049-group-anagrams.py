@@ -18,8 +18,7 @@ class Solution:
             dictionary = {}
             for char in s:
                 dictionary[char] = dictionary.get(char, 0) + 1
-            fset = frozenset(dictionary.items())
-            return fset
+            return hash(frozenset(dictionary.items()))
 
         for s in strs:
             groups[encode(s)].append(s)
