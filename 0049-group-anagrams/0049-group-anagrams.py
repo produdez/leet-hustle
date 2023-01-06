@@ -11,16 +11,9 @@ class Solution:
                 Space: O(#num_str) [since could have unique encodings] * O(#avg_m) [average unique characters]
         '''
         groups = defaultdict(list)
-        def encode(s):
-            '''
-                Time: O(n)
-                Space: O(1) 
-            '''
+        for s in strs:
             count = [0] * 26
             for char in s:
                 count[ord(char) - 97] += 1
-            return hash(tuple(count))
-
-        for s in strs:
-            groups[encode(s)].append(s)
+            groups[tuple(count)].append(s)
         return groups.values()
