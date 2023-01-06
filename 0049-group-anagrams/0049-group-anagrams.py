@@ -24,4 +24,4 @@ class Solution:
         for s in strs:
             enc = encode(s)
             groups[enc] = groups.get(enc, []) + [s]
-        return list(groups.values())
+        return groups.values()
