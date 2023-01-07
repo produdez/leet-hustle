@@ -8,9 +8,8 @@ class Solution:
             and sort the keys by value and return k elements
             
             Complexity:
-                Time: O(n)-Count + O(mlogm)-Sort (m is #unique values)
-                    -> Total O(mlogm)
-                Space: O(n)-HashMap + anythat sorting cause (posbiliy O(1))
+                Time: O(n)-Count + O(m)-Sort
+                Space: O(n)-HashMap + O(m)-BucketArray
         '''
         counter = {}
         for num in nums:
