@@ -23,7 +23,5 @@ class Solution:
         result = []
         for bucket in count_buckets:
             for num in bucket:
-                if k==0: return result
                 result.append(num)
-                k -= 1
-        return result
+                if len(result) == k: return result
