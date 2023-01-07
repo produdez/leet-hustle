@@ -1,7 +1,8 @@
 class Solution:
     def topKFrequent(self, nums: List[int], k: int) -> List[int]:
         '''
-            Version: 1
+            Version: 2 
+                update sort with bucket sort
             
             Count into a HashMap
             and sort the keys by value and return k elements
@@ -15,5 +16,15 @@ class Solution:
         for num in nums:
             counter[num] = counter.get(num, 0) + 1
         
-        sorted_key = sorted(counter.keys(), key=counter.get, reverse=True)
-        return sorted_key[:k]
+        # each index in bucket represents the frequency
+        count_buckets = [[] for _ in range(len(nums))]
+        for num, freq in counter.items():
+            count_buckets[len(nums) - freq].append(num)
+        
+        result = []
+        for bucket in count_buckets:
+            for num in bucket:
+                if k==0: return result
+                result.append(num)
+                k -= 1
+        return result
