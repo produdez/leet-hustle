@@ -9,6 +9,8 @@ class Solution:
             Complexity: Much better
             Time: O(~2n) -> O(n) (similar to version 2)
             Space: O(n) (3 times better than version 2)
+            Extra-note: problem stated that output array does not count in space
+            complexity -> so it's technically O(1)
         '''
         result = [1] * len(nums)
         
