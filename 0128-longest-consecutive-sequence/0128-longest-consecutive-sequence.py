@@ -14,6 +14,7 @@ class Solution:
             - Time: O(n) - convert + O(n) to ilterate and pop all values to check streak
                 -> O(n)
             - Space: O(n) to store the HashSet that we converted our list into
+                -> Since we override the input it's essentially O(1)
         '''
         if not nums: return 0
         nums = set(nums)
