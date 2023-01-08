@@ -7,8 +7,8 @@ class Solution:
             - And update the result in result array
             
             Complexity: Much better
-            Time: O(~2n) -> O(n)
-            Space: O(n)
+            Time: O(~2n) -> O(n) (similar to version 2)
+            Space: O(n) (3 times better than version 2)
         '''
         result = [1] * len(nums)
         
