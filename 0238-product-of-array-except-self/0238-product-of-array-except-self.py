@@ -2,7 +2,11 @@ class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
         '''
             Version 2:
-                - 
+                - Get MulLeft O(n) 
+                - And MulRight O(n)
+                - And then construct MulExept O(n)
+            Time: -> O(3n) -> O(n)
+            Storage: O(3n) -> O(n)
         '''
         left = [1]
         right = [1]
