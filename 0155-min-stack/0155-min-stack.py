@@ -1,7 +1,10 @@
+'''
+    Idea: keep a snapshot of min value at every node 
+'''
 class Node:
-    def __init__(self, val, minVal, next=None):
+    def __init__(self, val, next=None):
         self.val = val
-        self.minVal = minVal
+        self.minVal = min(next.minVal, val) if next else val
         self.next = next
 
 class MinStack:
@@ -12,8 +15,7 @@ class MinStack:
         
 
     def push(self, val: int) -> None:
-        newMin = min(self.head.minVal, val) if self.head else val
-        self.head = Node(val, newMin, self.head)
+        self.head = Node(val, self.head)
         self.length += 1
 
     def pop(self) -> None:
