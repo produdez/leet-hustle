@@ -1,37 +1,25 @@
 '''
-    Version 1:
-        Does not use built in
-
-    Idea: keep a snapshot of min value at every node 
-'''
-class Node:
-    def __init__(self, val, next=None):
-        self.val = val
-        self.minVal = min(next.minVal, val) if next else val
-        self.next = next
-
-class MinStack:
+    Version 2: use built-in
     
+    Idea: keep a snapshot of min val at every node/value
+'''
+class MinStack:
+
     def __init__(self):
-        self.head = None
-        self.length = 0
-        
+        self.stack = []
 
     def push(self, val: int) -> None:
-        self.head = Node(val, self.head)
-        self.length += 1
+        minVal = min(val, self.stack[-1][1]) if self.stack else val
+        self.stack.append((val, minVal))
 
     def pop(self) -> None:
-        temp = self.head
-        self.head = self.head.next
-        del temp
-        self.length -= 1
+        self.stack.pop()
 
     def top(self) -> int:
-        return self.head.val
+        return self.stack[-1][0]
 
     def getMin(self) -> int:
-        return self.head.minVal
+        return self.stack[-1][1]
 
 
 # Your MinStack object will be instantiated and called as such:
