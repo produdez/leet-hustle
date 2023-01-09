@@ -1,4 +1,7 @@
 '''
+    Version 1:
+        Does not use built in
+
     Idea: keep a snapshot of min value at every node 
 '''
 class Node:
