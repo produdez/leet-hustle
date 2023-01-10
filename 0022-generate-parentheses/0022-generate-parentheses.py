@@ -16,6 +16,14 @@ class ParenRep:
     def __str__(self): return ''.join(self.rep)
     
 class Solution:
+    '''
+        Version 1
+        Idea:
+            Generate all possible cases
+            Using stack to go DFS (BFS is also okay with queue)
+        Complexity:
+            Time = Space = LoopCount = #Possible results
+    '''
     def generateParenthesis(self, n: int) -> List[str]:
         stack = [ParenRep(['('], 1, n-1, n)]
         result = []
