@@ -11,9 +11,8 @@ class Solution:
                     - We keep poping the heap and get the index difference
                     - Then we put the current (temp, index) into the heap
             Complexity:
-            - Time: O(n*(log(n)))
-            - Space: O(n) result array + O(n) heap 
-                -> O(n) 
+            - Time: O(n*(log(n)) + n) -> O(nlogn)
+            - Space: O(n) heap (cheat by storing result in input array) 
         '''
         heap = [] # heap of tuple (temperature, index)
         for index, temp in enumerate(temperatures):
