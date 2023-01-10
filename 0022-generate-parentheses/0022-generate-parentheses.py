@@ -24,11 +24,8 @@ class Solution:
             if curr.finished():
                 result.append(str(curr))
                 continue
-                
-            if not curr.isOpen():
-                if curr.rl > 0: stack.append(curr.addOpen())
-            else:
-                if curr.rl > 0: stack.append(curr.addOpen())
-                if curr.rr > 0: stack.append(curr.addClose())
+
+            if curr.rl > 0: stack.append(curr.addOpen())
+            if curr.isOpen(): stack.append(curr.addClose())
             
         return result
