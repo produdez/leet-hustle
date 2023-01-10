@@ -8,7 +8,9 @@ class Solution:
                 But now uses backtracking approach (DFS)
                 and possibly less space
             Complexity:
-                = Tree size
+                Time: Treesize = Result size
+                Space = O(n) + result size
+                Cause our stack only store n chars at max at all times
         '''
         
         stack = [] # this stack keeps track of the current result we're building
