@@ -15,16 +15,15 @@ class Solution:
             - Space: O(n) result array + O(n) heap 
                 -> O(n) 
         '''
-        result = [0] * len(temperatures)
         heap = [] # heap of tuple (temperature, index)
         for index, temp in enumerate(temperatures):
             while heap and heap[0][0] < temp:
                 head = heapq.heappop(heap)
-                result[head[1]] = index - head[1]
+                temperatures[head[1]] = index - head[1]
             
             heapq.heappush(heap, (temp, index))
         
         for _, i in heap:
-            result[i] = 0
-        return result
+            temperatures[i] = 0
+        return temperatures
             
