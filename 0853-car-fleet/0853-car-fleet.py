@@ -13,15 +13,16 @@ class Solution:
             - Space: O(n) for sorted array + O(n) for stack
         '''
 
-        cars = sorted(zip(position, speed), key=lambda x: x[0], reverse=True)       
-        fleets = []
+        cars = sorted(zip(position, speed), key=lambda x: x[0], reverse=True)  
         catchable = lambda c1, c2: (target-c2[0])/c2[1] >= (target-c1[0])/c1[1]
-        
-        for car in cars:
-            if fleets and catchable(car, fleets[-1]):
+        fleet_count = 1
+        curr = cars[0]
+        for car in cars[1:]:
+            if catchable(car, curr):
                 continue
-            fleets.append(car)
-        return len(fleets)
+            fleet_count += 1
+            curr = car
+        return fleet_count
             
             
                 
