@@ -17,11 +17,11 @@ class Solution:
         catchable = lambda c1, c2: (target-c2[0])/c2[1] >= (target-c1[0])/c1[1]
         fleet_count = 1
         curr = cars[0]
-        for car in cars[1:]:
-            if catchable(car, curr):
+        for i in range(1, len(cars)):
+            if catchable(cars[i], curr):
                 continue
             fleet_count += 1
-            curr = car
+            curr = cars[i]
         return fleet_count
             
             
