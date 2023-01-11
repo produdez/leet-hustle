@@ -1,8 +1,8 @@
 class Solution:
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
         '''
-            Version 2: Update simplicity + intuition
-            
+            Version 2.5: Update simplicity + intuition
+                update no need stack and can keep track by arrive time of fleet
             Idea:
                 1. sort by position
                 2. GO FROM RIGHT TO LEFT
@@ -10,7 +10,7 @@ class Solution:
                 4. reducible can be check by compare arrive time to target
             Complexity:
             - Time: O(nlogn)-sort + O(n) fleet build
-            - Space: O(n) for sorted array + O(n) for stack
+            - Space: O(n) for sorted array
         '''
 
         cars = sorted(zip(position, speed), reverse=True)  
