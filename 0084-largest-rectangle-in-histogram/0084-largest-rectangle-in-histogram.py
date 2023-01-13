@@ -1,7 +1,8 @@
 class Solution:
     def largestRectangleArea(self, heights: List[int]) -> int:
         '''
-            Version 1 (I dint solve this myself)
+            Version 1.1: 
+                Update: remove area variable
             
             Idea: Calculate the area that each block (each height) can expand to
             - Keep a monotonic inceasing stack of (start_index, height)
@@ -33,15 +34,13 @@ class Solution:
             expanded_index = index
             while stack[-1][1] > new_height:
                 start_idx, height = stack.pop()
-                area = height * (index - start_idx) #! 1
-                max_area = max(max_area, area)
+                max_area = max(max_area, height * (index - start_idx)) #! 1
                 expanded_index = start_idx
 
             stack.append((expanded_index, new_height))
         
         for start_idx, height in stack:
-            area = (len(heights) - start_idx) * height
-            max_area = max(max_area, area)
+            max_area = max(max_area, (len(heights) - start_idx) * height)
         return max_area
 
             
