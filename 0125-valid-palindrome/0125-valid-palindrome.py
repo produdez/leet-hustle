@@ -1,5 +1,9 @@
 class Solution:
     def isPalindrome(self, s: str) -> bool:
+        '''
+            NOTE: if wanna do alnum() by yourself, just do ascilookup
+             ord(char) between ('a','z') and ('A','Z') and ('0','9')
+        '''
         
         l, r = 0, len(s) - 1
         while l < r:
