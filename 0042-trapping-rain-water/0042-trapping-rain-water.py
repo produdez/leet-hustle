@@ -12,8 +12,7 @@ class Solution:
             sunken = 0
             while stack and stack[-1][1] <= h:
                 prev_i, prev_h, prev_sunken = stack.pop()
-                full_h = (i - prev_i - 1) * prev_h
-                increment = max(0, full_h - sunken)
+                increment = (i - prev_i - 1) * prev_h - sunken
                 water += increment
                 sunken += increment + prev_h + prev_sunken
             stack.append((i,h,sunken))
