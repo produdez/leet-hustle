@@ -2,7 +2,9 @@ class Solution:
     def trap(self, height: List[int]) -> int:
         '''
             Version 2:
-                Optimal: Neetcode 
+                Optimal: Neetcode
+                NOTE: if want simpler code to understand view a few commits before this
+                (not version 1 tho, that's a different version)
             Complexity:
             - Time: O(n)
             - Space: O(1)
@@ -25,7 +27,8 @@ class Solution:
                     curr = left + 1 or right - 1
                 2. By updating the max before updating the water, it is made 
                     sure that the trapped value is never negative
-                    if 
+                    if curr.h < maxH then after update maxH = oldMaxH -> positive
+                    if curr.h > maxH then after update maxH = curr.h -> zero
                 
         '''
         left, right = 0, len(height) - 1
