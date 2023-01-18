@@ -17,6 +17,9 @@ class Solution:
             
             NOTE: why decreasing stack ?
                 Cus we can only calculate sunken bottom up
+            Complexity:
+            - Time: O(2n): everything is added once and removed once
+            - Space: O(n)
         '''
         stack = [] # (index, height, sunken) , ordered decreasingly by height
         water = 0
