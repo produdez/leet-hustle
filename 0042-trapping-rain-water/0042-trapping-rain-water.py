@@ -18,9 +18,8 @@ class Solution:
                 sunken += increment + prev_h + prev_sunken
             stack.append((i,h,sunken))
         
-        for i in range(1, len(stack)):
-            i1,h1,s1 = stack[i]
-            i0,h0,s0 = stack[i-1]
-            water += h1 * (i1 - i0 - 1) - s1
+        while len(stack) >= 2:
+            i, h, sunken = stack.pop()
+            water += h * (i - stack[-1][0] - 1) - sunken
             
         return water
