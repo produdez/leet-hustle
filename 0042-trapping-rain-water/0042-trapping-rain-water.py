@@ -1,8 +1,7 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
         '''
-            Version 1:
-            
+            Version 1: Nice intuition but hard to understand
             Idea:
             - Keep monotonic-decresing stack ordered by height
             - Each node keeps track of it's sunken value, which includes
