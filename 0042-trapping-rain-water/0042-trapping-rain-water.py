@@ -6,29 +6,17 @@
 
 class Solution:
     def trap(self, height: List[int]) -> int:
-        stack = [(-1,0,0)] # index, height, sunken
+        stack = [] 
         water = 0
-        # print(stack, 'water: ', water)
         for i, h in enumerate(height):
-            # print('-------')
-            # print('new: ', (i,h))
-            if h < stack[-1][1]:
-                stack.append((i,h,0))
-            else:
-                sunken = 0
-                while stack and stack[-1][1] <= h:
-                    prev_i, prev_h, prev_sunken = stack.pop()
-                    full_h = (i - prev_i - 1) * prev_h
-                    # print('full: ', full_h)
-                    increment = max(0, full_h - sunken)
-                    water += increment
-                    sunken += increment + prev_h + prev_sunken
-                    # print('i,h,inc,sunc,water: ', prev_i, prev_h, increment, sunken, water)
-                stack.append((i,h,sunken))
-            
-            
-            # print(stack)
-            # print('water: ', water)
+            sunken = 0
+            while stack and stack[-1][1] <= h:
+                prev_i, prev_h, prev_sunken = stack.pop()
+                full_h = (i - prev_i - 1) * prev_h
+                increment = max(0, full_h - sunken)
+                water += increment
+                sunken += increment + prev_h + prev_sunken
+            stack.append((i,h,sunken))
         
         for i in range(1, len(stack)):
             i1,h1,s1 = stack[i]
