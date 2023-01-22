@@ -6,6 +6,7 @@ class Solution:
             
             Update:
                 Instead of using a var, we use right to keep track of our valid result
+                - Dont right = piv + 1, just right = piv
                 - And we make sure to stop when left == right
             Complexity:
             - Time: O(n + n * log(max(piles))) (init n to get max)
