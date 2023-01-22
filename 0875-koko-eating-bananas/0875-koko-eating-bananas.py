@@ -26,7 +26,7 @@ class Solution:
         while l <= r:
             piv = (l + r) // 2
             if valid(speed=piv): 
-                result = min(result, piv)
+                result = piv
                 r = piv - 1
             else: 
                 l = piv + 1
