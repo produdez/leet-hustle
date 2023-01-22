@@ -1,11 +1,11 @@
 class Solution:
     def findMin(self, nums: List[int]) -> int:
         pivot = len(nums) // 2
-        print('nums: ', nums)
+        # print('nums: ', nums)
         i = len(nums) // 2
         while True:
-            print('------')
-            print('i: ', i, ' curr pivot: ', nums[pivot])
+            # print('------')
+            # print('i: ', i, ' curr pivot: ', nums[pivot])
             left = (pivot - (1+i**2)) % len(nums)
             right = (pivot + (1+i**2)) % len(nums)
             
@@ -16,7 +16,7 @@ class Solution:
             else:
                 if i == 0: break
             
-            print(f'piv: {nums[pivot]}, left: {nums[left]}, right: {nums[right]}')
+            # print(f'piv: {nums[pivot]}, left: {nums[left]}, right: {nums[right]}')
             i = i//2
             
         return nums[pivot]
