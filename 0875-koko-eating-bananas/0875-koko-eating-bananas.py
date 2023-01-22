@@ -20,7 +20,6 @@ class Solution:
             -> result stop when left = right = piv
         '''
         left, right = 1, max(piles)
-        print('max: ', right, ' time_limit: ', h)
         def calc_time(speed):
             eat_time = 0
             for p in piles:
