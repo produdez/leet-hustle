@@ -6,8 +6,8 @@ class Solution:
         while True:
             # print('------')
             # print('i: ', i, ' curr pivot: ', nums[pivot])
-            left = (pivot - (1+i**2)) % len(nums)
-            right = (pivot + (1+i**2)) % len(nums)
+            left = (pivot - (1+i)) % len(nums)
+            right = (pivot + (1+i)) % len(nums)
             
             if nums[right] < nums[pivot]: 
                 pivot = right            
