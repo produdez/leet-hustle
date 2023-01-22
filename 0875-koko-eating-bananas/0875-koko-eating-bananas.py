@@ -1,5 +1,24 @@
 class Solution:
     def minEatingSpeed(self, piles: List[int], h: int) -> int:
+        '''
+            Version 1:
+            
+            Idea: 
+            Binary search from 1 to max speed
+            
+            1. Right points to max_valid value
+            2. left points to small potentially invalid values
+            When searching, we keep updating the left, ignoring all the invalid values 
+            While for the right, we keep the last valid value 
+            and when pivot meets left, right, we stop
+            
+            Intiution:
+            When searching, if speed is too slow, means it's invalid
+                -> move to the right
+            If speed is fast (good)
+                -> move to the left but keep the current pivot as the right so that we khow the last valid value is our current right
+            -> result stop when left = right = piv
+        '''
         left, right = 1, max(piles)
         print('max: ', right, ' time_limit: ', h)
         def calc_time(speed):
@@ -8,15 +27,11 @@ class Solution:
                 eat_time += math.ceil(p/speed)
             return eat_time
         
-        # for i in range(math.ceil(math.log2(right))):
         i = 0
         while True:
-            # print(f'-- {i} -------')
             i += 1
             pivot = (left + right) // 2
             eat_time = calc_time(speed=pivot)
-            # print(f'left: {left}, right: {right}, piv: {pivot}')
-            # print('time: ', eat_time)
             if pivot == left == right: break
             if eat_time > h:
                 left = pivot + 1
