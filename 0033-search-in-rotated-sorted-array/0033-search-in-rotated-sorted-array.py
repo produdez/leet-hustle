@@ -14,6 +14,7 @@ class Solution:
                     r = piv - 1
             return -1
         
+        between = lambda a, b: a <= target and target <= b
         left, right = 0, len(nums) - 1
         while left <= right:
             pivot = (left + right) // 2
@@ -22,12 +23,12 @@ class Solution:
             if nP == target: return pivot
             
             if nP >= nL: 
-                if nL <= target and target < nP:
+                if between(nL, nP):
                     return binarySearch(left, pivot - 1)
                 else:
                     left = pivot + 1
             else:
-                if nP < target and target <= nR:
+                if between(nP, nR):
                     return binarySearch(pivot + 1, right)
                 else:
                     right = pivot - 1
