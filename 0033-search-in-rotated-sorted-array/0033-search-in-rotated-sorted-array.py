@@ -1,11 +1,26 @@
 class Solution:
+    '''
+        Version: 1
+        
+        Idea:
+            At every pivot, there can only be two cases
+            1. pivot > left -> means left to pivot is ordered
+                So we just check if target is between those and
+                - Yes -> binary search from left to piv
+                - No -> shift left pointer
+            2. pivot < right -> right to piv is ordered
+                Same
+                - Between -> bin search
+                - Not -> shift right pointer
+            So basically this is just advanced binary search
+        Complexity:
+        - Time: O(log(n)) for sure
+        - Space: O(1)
+    '''
     def search(self, nums: List[int], target: int) -> int:        
         def binarySearch(l, r):
-            # print('Binary searching between: ', nums[l], nums[r])
             while l <= r:
-                piv = (l+r) // 2
-                # print(nums[l], nums[r], nums[piv])
-                
+                piv = (l+r) // 2                
                 if nums[piv] == target: return piv
                 
                 if nums[piv] < target:
@@ -19,7 +34,6 @@ class Solution:
         while left <= right:
             pivot = (left + right) // 2
             nL, nR, nP = nums[left], nums[right], nums[pivot]
-            # print('l,r,p: ', nL, nR, nP)
             if nP == target: return pivot
             
             if nP >= nL: 
