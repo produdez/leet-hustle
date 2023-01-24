@@ -13,18 +13,16 @@ class TimeMap:
         left, right = 0, len(arr) - 1
         
         res, ts_res = "", 0
-        while left <= right:
-            pivot = (left + right) // 2
+        while left < right:
+            pivot = (left + right) // 2 + 1
             if arr[pivot][0] == timestamp: return arr[pivot][1]
             
             if timestamp > arr[pivot][0]:
-                left = pivot + 1
-                if ts_res < arr[pivot][0]:
-                    ts_res, res = arr[pivot]
+                left = pivot
             else:
                 right = pivot - 1
 
-        return res
+        return arr[left][1]
 
 
 # Your TimeMap object will be instantiated and called as such:
