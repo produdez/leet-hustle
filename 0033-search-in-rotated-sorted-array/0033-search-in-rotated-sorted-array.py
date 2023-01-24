@@ -1,7 +1,7 @@
 class Solution:
     def search(self, nums: List[int], target: int) -> int:        
         def binarySearch(l, r):
-            print('Binary searching between: ', nums[l], nums[r])
+            # print('Binary searching between: ', nums[l], nums[r])
             while l <= r:
                 piv = (l+r) // 2
                 # print(nums[l], nums[r], nums[piv])
@@ -18,7 +18,7 @@ class Solution:
         while left <= right:
             pivot = (left + right) // 2
             nL, nR, nP = nums[left], nums[right], nums[pivot]
-            print('l,r,p: ', nL, nR, nP)
+            # print('l,r,p: ', nL, nR, nP)
             if nP == target: return pivot
             
             if nP >= nL: 
