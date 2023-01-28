@@ -1,6 +1,5 @@
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
-        if not s: return 0
         left = 0
         uniq = {}
         maxLen = 0
