@@ -15,6 +15,9 @@ class Solution:
                 From the unique dictionary
             - Move left pointer to right after the duplicated index
             - Override the duplicated index with the new index
+        Complexity:
+        - Time: O(n) loop through all once, pop out max n times
+        - Space: O(n) could need to hold all n elements
     '''
     def lengthOfLongestSubstring(self, s: str) -> int:
         left = 0
