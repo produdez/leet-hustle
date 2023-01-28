@@ -1,35 +1,33 @@
 class Solution:
     '''
-        Version: 1
+        Version: 2
         
-        Idea: Two pointers
-        1. left/right points at sides of the non-duplicated string
-        2. Loop through and
-            - Check duplicate
-            - Add new char to the unique dictionary
-        3. When is duplicate !
-            - Get + update maxLength
-            - Remove all chars from 
-                - Current duplicated index
-                - To the current left
-                From the unique dictionary
-            - Move left pointer to right after the duplicated index
-            - Override the duplicated index with the new index
+        Idea: Expanding Window
+        1. Keep a window containing the current non-dup string
+            And also a set of all elements
+        2. When encounter a duplicate
+            * Strink the window from the left while popping the set
+            Until duplicate is removed
+        3. Update maxLength and add new element
+        
+        Note:
+            Why pop from the left:
+            Cause when an index i cause a duplicate at j
+            We need to pop all before j and j
         Complexity:
         - Time: O(n) loop through all once, pop out max n times
         - Space: O(n) could need to hold all n elements
     '''
     def lengthOfLongestSubstring(self, s: str) -> int:
-        left = 0
-        uniq = {} # store unique char and it's index
+        left = 0 
         maxLen = 0
-        for right, char in enumerate(s):
-            if char in uniq:
-                maxLen = max(maxLen, right - left) 
-                for c in s[left: uniq[char]]:
-                    uniq.pop(c)
-                left = uniq[char] + 1
-            
-            # add new char or override index of duplicated char
-            uniq[char] = right 
-        return max(maxLen, len(s) - left)
+        uniq = set()
+        for right in range(0, len(s)):
+            while s[right] in uniq:
+                uniq.remove(s[left])
+                left += 1
+
+            uniq.add(s[right])
+            maxLen = max(maxLen, right - left + 1)
+        
+        return maxLen
