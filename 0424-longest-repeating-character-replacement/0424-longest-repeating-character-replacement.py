@@ -1,40 +1,43 @@
 class Solution:
     '''
-        Version: 2
+        Version: 3
         
-        Idea: Simple expanding window
-            A window [left, right] represent a sub string
-            Valid if len(window) - frequency(most_occur_char) <= k
-            1. So when invalid
-                - Strink window from the left 
-                - And update occurance/maxFreq
-            2. Till it's valid
-                - Update max len
-            3. Also note to update occur/max Freq when expanding window
-
+        Idea: Same as version 2 (window moving) with optimization
+            A window represent substr [left, right]
+            -> valid: len(wind) - maxFreq <= k -> update maxLen
+            -> else: move left pointer til valid
+        Optimization: No need to get maxFreq every loop 
+            (reduce condition check from O(m) -> O(1))
+            m is #unique_char (this case 26)
         Complexity:
-        Time: O(2 * n * m) where m is #unique chars (this case 26)
-            Every char is added in once
-            Every char could be popped out once
-            -> 2n
-            Each time add/pop -> update takes m 
-            -> 2n * m
-        Space: O(n) for the occurence dictionary
+        - Time: O(2n) -> O(n)
+            window expand right n times
+            window strink left maximum ~n time
+        - Space: O(n) for occurance HashMap
+        * NOTE: <big-brain>
+            WHY dont we update maxFrequency when strinking window?
+            --
+            Because 
+            1. we're looking for the maxLen valid string here
+            2. maxFreq decreasing only make the tring more invalid
+            --
+            The only way that we find another maxLength str is when
+            there's a string with more duplicated element
+            AKA when maxFreq is increased
     '''
     def characterReplacement(self, s: str, k: int) -> int:
         left = 0
-        occur = collections.defaultdict(int) # 0
+        occur = collections.defaultdict(int)
         maxLen = 0
+        maxFreq = 0
         for right, rChar in enumerate(s):
             occur[rChar] += 1
-            maxFreq = max(occur.values()) # O(m=26)
+            maxFreq = max(maxFreq, occur[rChar])
             
-            while right - left + 1 - maxFreq > k: #invalid
+            while (right - left + 1) - maxFreq > k:
                 occur[s[left]] -= 1
                 left += 1
-                maxFreq = max(occur.values())
-            
+                # no need update maxFreq
             maxLen = max(maxLen, right - left + 1)
-        
+
         return maxLen
-                
