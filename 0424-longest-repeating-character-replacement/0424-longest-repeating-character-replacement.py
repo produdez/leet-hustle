@@ -1,5 +1,10 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
+        '''
+            Version: 1.evil
+            
+            Idea: Will come back to later
+        '''
         occur = collections.defaultdict(int) # 0
         left = 0
         mostFreq = ''
