@@ -1,7 +1,7 @@
 class Solution:
     '''
-        Version: 3
-        
+        Version: 3.5
+            A bit more optimization with the bigbrain freq check
         Idea: Same as version 2 (window moving) with optimization
             A window represent substr [left, right]
             -> valid: len(wind) - maxFreq <= k -> update maxLen
@@ -24,6 +24,10 @@ class Solution:
             The only way that we find another maxLength str is when
             there's a string with more duplicated element
             AKA when maxFreq is increased
+            -- <update>
+            Also, there's no need to strink window but just shift it
+            when invalid bc strinking the window does not give us a better
+            result !!! (maxLen will never be updated)
     '''
     def characterReplacement(self, s: str, k: int) -> int:
         left = 0
@@ -34,7 +38,7 @@ class Solution:
             occur[rChar] += 1
             maxFreq = max(maxFreq, occur[rChar])
             
-            while (right - left + 1) - maxFreq > k:
+            if (right - left + 1) - maxFreq > k:
                 occur[s[left]] -= 1
                 left += 1
                 # no need update maxFreq
