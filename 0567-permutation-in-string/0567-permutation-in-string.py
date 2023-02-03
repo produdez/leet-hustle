@@ -15,10 +15,10 @@ class Solution:
                     O(1) for adding and O(1) for removing
                     * Note it's armortized O(1)
             Total: O(2*n1) + O(n2 - n1) * (O(1) + O(1) + O(1))
-            -> O(n2 - n1)
+            -> O(n1 + (n2 - n1))
         - Space:
-            We only need 2 maps of sized n1
-            -> O(2 * n1) = O(n1)
+            We only need 2 maps of size max 26
+            -> O(2 * 26) = O(1)
     '''
     def checkInclusion(self, s1: str, s2: str) -> bool:
         if len(s2) < len(s1): return False
