@@ -1,7 +1,9 @@
 class Solution:
     '''
-        Version: 3
-            Optimized (neetcode)
+        Version: 3.1
+            Similar variant of 3
+            Here we only count match if freq1 = freqw
+            => stop condition is match = len(dict1)
         Idea: Same as version 2
             But update so as to remove the cost of HashMap compare
         => How? By keeping an variable indicating match rate
@@ -29,25 +31,21 @@ class Solution:
         match = 0
         for c in dict_s1:
             if dict_window.get(c,0) == dict_s1[c]: match += 1
-            # match += min(dict_window.get(c,0), dict_s1[c])
-        print('init')
-        print(dict_s1)
-        print(dict_window)
+
         # Move and compare
         while True:
-            # print(f'window: {s2[left:right + 1]}, match: {match}')
             if match == len(dict_s1): return True
             if right + 1 >= len(s2): return False
             
             # Update match
             
             # take out
-            
             match dict_window[s2[left]] - dict_s1.get(s2[left],0):
                 case 0: match -= 1
                 case 1: match += 1 if s2[left] in dict_s1 else 0
             dict_window[s2[left]] -= 1
             if dict_window[s2[left]] == 0: dict_window.pop(s2[left])
+
             left += 1
             right += 1
   
