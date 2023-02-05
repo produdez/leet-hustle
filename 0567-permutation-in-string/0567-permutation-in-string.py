@@ -1,6 +1,7 @@
 class Solution:
     '''
-        Version: 2
+        Version: 2.1
+            Update nothing but complexity note
         Idea:
         1. Use hash map to represent a substr's representation
         2. Preconstruc hash map for s1 and our moving window
@@ -14,8 +15,10 @@ class Solution:
                 Updating hash map when window shifted:
                     O(1) for adding and O(1) for removing
                     * Note it's armortized O(1)
-            Total: O(2*n1) + O(n2 - n1) * (O(1) + O(1) + O(1))
-            -> O(n1 + (n2 - n1))
+                Comparing hashmap: 
+                    O(m) where m is max size of hash map (26)
+            Total: O(2*n1) + O(n2 - n1) * (O(1) + O(1) + O(1) + O(m))
+            -> O(n1 + (n2 - n1)*26)
         - Space:
             We only need 2 maps of size max 26
             -> O(2 * 26) = O(1)
