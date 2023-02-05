@@ -1,51 +1,54 @@
 class Solution:
     '''
-        Version: 2.1
-            Update nothing but complexity note
-        Idea:
-        1. Use hash map to represent a substr's representation
-        2. Preconstruc hash map for s1 and our moving window
-            * Just update HashMap of window when it's shifted 
-            (add 1 remove 1)
+        Version: 3
+        Idea: Same as version 2
+            But update so as to remove the cost of HashMap compare
         Complexity:
-        - Time: 
-            Setup init hashMaps: O(2 * n1)
-            Traverse the array: O(n2 - n1)
-                Checking match O(1) (hashmap compare)
-                Updating hash map when window shifted:
-                    O(1) for adding and O(1) for removing
-                    * Note it's armortized O(1)
-                Comparing hashmap: 
-                    O(m) where m is max size of hash map (26)
-            Total: O(2*n1) + O(n2 - n1) * (O(1) + O(1) + O(1) + O(m))
-            -> O(n1 + (n2 - n1)*26)
-        - Space:
-            We only need 2 maps of size max 26
-            -> O(2 * 26) = O(1)
+        Time: O(n1 + (n2-n1))
+        Space: O(2 * m) = O(2 * 26) = O(1)
     '''
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        if len(s2) < len(s1): return False
+        if len(s1) > len(s2): return False
         left, right = 0, len(s1) - 1
         
-        # Contruct HashMaps
+        # Populate HashMap
         dict_s1 = {}
         dict_window = {}
-        for c in s1:
-            dict_s1[c] = dict_s1.get(c, 0) + 1
-        for c in s2[left: right + 1]:
-            dict_window[c] = dict_window.get(c, 0) + 1
-        
-        # Ilterate and check
-        while True:
-            if dict_window == dict_s1: return True
+        for i in range(len(s1)):
+            dict_s1[s1[i]] = dict_s1.get(s1[i], 0) + 1
+            dict_window[s2[i]] = dict_window.get(s2[i], 0) + 1
+        # print('s1 dict: ', dict_s1)
+        # Calc init match
+        match = 0
+        for c in dict_s1:
+            # if dict_window.get(c,0) == dict_s1[c]: match += dict_s1[c]
+            match += min(dict_window.get(c,0), dict_s1[c])
+        # Move and compare
+        while True: # TODO: change to dowhile later
+            # print(f'window: {s2[left:right+1]}, match: {match}')
+            # print('wdict: ', dict_window)
+            if match == len(s1): return True
+            if right + 1 >= len(s2): return False
             
-            if dict_window[s2[left]] == 1: del dict_window[s2[left]]
-            else: dict_window[s2[left]] -= 1
-
+            # Update match
+            
+            # take out
+            if dict_window[s2[left]] <= dict_s1.get(s2[left],0):
+                # print('minus')
+                match -= 1
+            dict_window[s2[left]] -= 1
+            if dict_window[s2[left]] == 0: dict_window.pop(s2[left])
+            
             left += 1
             right += 1
-            if right >= len(s2): return False
+  
+            # put in
             dict_window[s2[right]] = dict_window.get(s2[right], 0) + 1
-                
-                    
-            
+            # if s2[right] in dict_s1:
+            if dict_window[s2[right]] <= dict_s1.get(s2[right], 0):
+                # print('inc')
+                match += 1
+        
+        
+        
+        
