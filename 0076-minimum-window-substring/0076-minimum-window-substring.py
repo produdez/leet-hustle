@@ -7,14 +7,11 @@ class Solution:
             count_t[char] += 1
         
         count_w = collections.defaultdict(int)
-        left, right = 0, 0
-        count_w[s[left]] += 1
-        
+        left = 0        
         to_match = len(count_t)
-        match = 1 if count_w[s[left]] == count_t[s[left]] else 0
-        if match == len(count_t): return s[0]
+        match = 0
         best = ''
-        for right in range(left + 1, len(s)):
+        for right in range(left, len(s)):
             count_w[s[right]] += 1
 
             if count_w[s[right]] == count_t[s[right]]: # match increases
