@@ -1,18 +1,25 @@
 class Solution:
+    '''
+        Version 1.9:
+            1. Using python lib to simulate the queue (double ended queue)
+            2. Use a trick to not have to write two loops
+        Idea:
+            Same as version 1
+            but use python lib
+    '''
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        queue = [nums[0]] # monotonic decreasing queue
-        for num in nums[1: k]:
-            while queue and num > queue[-1]: queue.pop()
-            queue.append(num)
-        
+        queue = collections.deque([]) # de.que = double ended queue
         left = 0
-        result = [queue[0]]
-        for right in range(k, len(nums)):
-            if nums[left] == queue[0]: queue.pop(0)
-            left += 1
-            
-            while queue and nums[right] > queue[-1]: 
+        result = []
+        for right in range(len(nums)):
+            while queue and nums[right] > queue[-1]:
                 queue.pop()
             queue.append(nums[right])
-            result.append(queue[0])
+
+            # Trick here, window is only valid when right+1 > k
+            if right + 1 >= k:
+                result.append(queue[0])
+                
+                if nums[left] == queue[0]: queue.popleft()
+                left += 1
         return result
