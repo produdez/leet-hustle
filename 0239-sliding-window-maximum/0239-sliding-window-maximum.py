@@ -8,8 +8,6 @@ class Solution:
         left = 0
         result = [stack[0]]
         for right in range(k, len(nums)):
-            # print('new: ', nums[right])
-            # print('stack: ', stack)
             if nums[left] == stack[0]: stack.pop(0)
             left += 1
             
