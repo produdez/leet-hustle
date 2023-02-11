@@ -1,18 +1,18 @@
 class Solution:
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
-        stack = [nums[0]]
+        queue = [nums[0]] # monotonic decreasing queue
         for num in nums[1: k]:
-            while stack and num > stack[-1]: stack.pop()
-            stack.append(num)
+            while queue and num > queue[-1]: queue.pop()
+            queue.append(num)
         
         left = 0
-        result = [stack[0]]
+        result = [queue[0]]
         for right in range(k, len(nums)):
-            if nums[left] == stack[0]: stack.pop(0)
+            if nums[left] == queue[0]: queue.pop(0)
             left += 1
             
-            while stack and nums[right] > stack[-1]: 
-                stack.pop()
-            stack.append(nums[right])
-            result.append(stack[0])
+            while queue and nums[right] > queue[-1]: 
+                queue.pop()
+            queue.append(nums[right])
+            result.append(queue[0])
         return result
