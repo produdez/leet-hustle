@@ -6,6 +6,9 @@ class Solution:
         Idea:
             Same as version 1
             but use python lib
+        Complexity: 
+            - Time: O(n)
+            - Space: O(k)
     '''
     def maxSlidingWindow(self, nums: List[int], k: int) -> List[int]:
         queue = collections.deque([]) # de.que = double ended queue
