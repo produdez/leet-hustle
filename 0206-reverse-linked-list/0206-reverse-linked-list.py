@@ -5,24 +5,13 @@
 #         self.next = next
 class Solution:
     '''
-        Version 2:
-            Different implementation
-        Idea: Recursive
-            Construct the reversedHead recursively revHead and head
-            - revHead starts as None (empty reversed list)
-            - head is head
-            And we keep expanding revHead with the current head
-            till our head is empty -> our revHead is done
-        Complexity:
-        - Time: O(n)
-        - Space: O(1)
+        Version: 2.5
+            
     '''
     def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
-        def recursive(rHead, head):
-            if not head: return rHead
-            
-            nxt = head.next
-            head.next = rHead
-            return recursive(head, nxt)
+        if not head or not head.next: return head
         
-        return recursive(None, head)
+        revHead = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+        return revHead
