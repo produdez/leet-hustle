@@ -5,11 +5,13 @@
 #         self.next = next
 class Solution:
     '''
-        Version: 2
+        Version: 2.5
             No extra space but same speed
         Idea:
             Merge first half with reversed second half
             Find half by using slow-fast pointer technique
+            Use a dummy trick to make sure second > first 
+                and avoid some complexity
         Complexity:
         - Time: O(n)
             -> Find half: n/2
@@ -23,12 +25,12 @@ class Solution:
         if not head or not head.next: return head
         
         # find half
-        slow = fast = head
+        # add 1 to make sure second > first
+        dummy = ListNode(next=head) 
+        slow = fast = dummy
         while fast.next and fast.next.next:
             fast = fast.next.next
             slow = slow.next
-        
-        # print(f'fast: {fast}, slow: {slow}')
         second = slow.next
         slow.next = None # cut list
         
@@ -44,16 +46,14 @@ class Solution:
         # merge
         dummy = curr = ListNode()
         first = head
-        # print(f'first: {first}, second: {second}')
-        while second:
+        while first:
             curr.next = first
             first = first.next
             curr.next.next = second
             second = second.next
 
             curr = curr.next.next
-
-        curr.next = first
+        
         head = dummy.next
         
         
