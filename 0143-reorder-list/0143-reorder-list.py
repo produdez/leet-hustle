@@ -5,40 +5,55 @@
 #         self.next = next
 class Solution:
     '''
-        Version: 1
+        Version: 2
+            No extra space but same speed
         Idea:
-            1. Use a double-headed queue
-                And keep popping from left, right
-                Constructing our result
-            2. Start with a dummy node to remove
-                edge cases
+            Merge first half with reversed second half
+            Find half by using slow-fast pointer technique
         Complexity:
-        - Time: O(2n)
-            -> Create queue n
-            -> Pop n
-        - Space: O(n)
-            -> Queue contains ref to our list
+        - Time: O(n)
+            -> Find half: n/2
+            -> Reverse second: n/2
+            -> Merge: n
+            -> O(2n) total
+        - Space: O(1)
     '''
     def reorderList(self, head: Optional[ListNode]) -> None:
-        """
-        Do not return anything, modify head in-place instead.
-        """
-        queue = collections.deque([])
-        curr = head
-        while curr:
-            queue.append(curr)
-            curr = curr.next
+        # edge cases
+        if not head or not head.next: return head
         
-        dummy = ListNode()
-        curr = dummy
-        while True:
-            if not queue: break
-            else:
-                curr.next = queue.popleft()
-                curr = curr.next
-            if not queue: break
-            else:
-                curr.next = queue.pop()
-                curr = curr.next
-        curr.next = None
+        # find half
+        slow = fast = head
+        while fast.next and fast.next.next:
+            fast = fast.next.next
+            slow = slow.next
+        
+        # print(f'fast: {fast}, slow: {slow}')
+        second = slow.next
+        slow.next = None # cut list
+        
+        # reverse second half
+        prev = None
+        while second:
+            temp = second.next
+            second.next = prev
+            prev = second
+            second = temp
+        second = prev
+        
+        # merge
+        dummy = curr = ListNode()
+        first = head
+        # print(f'first: {first}, second: {second}')
+        while second:
+            curr.next = first
+            first = first.next
+            curr.next.next = second
+            second = second.next
+
+            curr = curr.next.next
+
+        curr.next = first
         head = dummy.next
+        
+        
