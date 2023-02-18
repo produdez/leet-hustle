@@ -9,22 +9,30 @@ class Node:
 
 class Solution:
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        ref = {}
+        link = collections.defaultdict(lambda: None)
         
-        newHead = Node(0)
-        curOld = head
-        curNew = newHead
-        while curOld:
-            curNew.next = Node(curOld.val)
-            curNew = curNew.next
+        new = Node(0)
+        new_node = new
+        while head:
+            # link
+            if not link[id(head)]:
+                # create
+                new_node.next = Node(head.val)
+                link[id(head)] = new_node.next
+            else:
+                new_node.next = link[id(head)]
+
+            new_node = new_node.next
             
-            ref[id(curOld)] = curNew
-            curOld = curOld.next
+            # link/create random also
+            if head.random is not None:
+                if not link[id(head.random)]:
+                    new_node.random = Node(head.random.val)
+                    link[id(head.random)] = new_node.random
+                else:
+                    new_node.random = link[id(head.random)]
+            
+            # shift
+            head = head.next
         
-        curNew = newHead.next
-        curOld = head
-        while curOld:
-            if curOld.random: curNew.random = ref[id(curOld.random)]
-            curOld = curOld.next
-            curNew = curNew.next
-        return newHead.next
+        return new.next
