@@ -8,6 +8,20 @@ class Node:
 """
 
 class Solution:
+    '''
+        Version: 1.5
+            Update a better single loop
+        Idea:
+        1. Use HashMap to save link between old node and 
+            new duplicated node
+        2. Iterate and
+            if link exist -> means created -> just link
+            else create and then link and add to link HashMap
+            do the same for node.random
+        Complextity:
+        - Time: O(n)
+        - Space: O(n)
+    '''
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
         link = collections.defaultdict(lambda: None)
         
