@@ -9,44 +9,27 @@ class Node:
 
 class Solution:
     '''
-        Version: 1.5
-            Update a better single loop
+        Version: 1.9
+            Same idea, cleanest code, maybe bit less
         Idea:
-        1. Use HashMap to save link between old node and 
-            new duplicated node
-        2. Iterate and
-            if link exist -> means created -> just link
-            else create and then link and add to link HashMap
-            do the same for node.random
-        Complextity:
-        - Time: O(n)
-        - Space: O(n)
+            Two passes - Two loop
+            One to just clone and link old to new nodes
+            Another to link all the next, random pointer
+        Complexity:
+        - O(n) both
     '''
     def copyRandomList(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        link = collections.defaultdict(lambda: None)
+        link = {None: None}
         
-        new = Node(0)
-        new_node = new
-        while head:
-            # link
-            if not link[id(head)]:
-                # create
-                new_node.next = Node(head.val)
-                link[id(head)] = new_node.next
-            else:
-                new_node.next = link[id(head)]
+        curr = head
+        while curr:
+            link[curr] = Node(curr.val)
+            curr = curr.next
+        
+        curr = head
+        while curr:
+            link[curr].next = link[curr.next]
+            link[curr].random = link[curr.random]
+            curr = curr.next
 
-            new_node = new_node.next
-            
-            # link/create random also
-            if head.random is not None:
-                if not link[id(head.random)]:
-                    new_node.random = Node(head.random.val)
-                    link[id(head.random)] = new_node.random
-                else:
-                    new_node.random = link[id(head.random)]
-            
-            # shift
-            head = head.next
-        
-        return new.next
+        return link[head]
