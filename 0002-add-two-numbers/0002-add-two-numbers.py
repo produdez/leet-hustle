@@ -5,41 +5,28 @@
 #         self.next = next
 class Solution:
     '''
-        Version: 1
+        Version: 1.5
+            Same but single loop, maybe less efficient
         Idea:
-        1. Merge using digit sum + remainder carry through
-        2. Merge until one list runs out and continue with leftover
-        3. Use dummy to remove complication
-        4. Make sure to add one more carry through if remainder is
-            not 0 at the end
+            Basic summary with remainder carry through
         Complexity:
-        - Time: O(max(m,n))
+        - Time: O(n)
         - Space: O(1)
     '''
     def addTwoNumbers(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
-        cur = dummy = ListNode()
-        remain = 0
+        curr = dummy = ListNode()
+        remainder = 0
+        while l1 or l2:
+            v1 = l1.val if l1 else 0
+            v2 = l2.val if l2 else 0
+            val = v1 + v2 + remainder
+            
+            curr.next = ListNode(val%10)
+            remainder = val // 10
 
-        while l1 and l2:
-            val1 = l1.val
-            val2 = l2.val
-            val = val1 + val2 + remain
-
-            cur.next = ListNode(val % 10)
-            remain = val // 10
-
-            cur = cur.next            
-            l1 = l1.next
-            l2 = l2.next
+            curr = curr.next
+            if l1: l1 = l1.next
+            if l2: l2 = l2.next
         
-        leftover = l1 if l1 else l2
-        while leftover:
-            val = leftover.val + remain
-            cur.next = ListNode(val % 10)
-            remain = val // 10
-
-            leftover = leftover.next
-            cur = cur.next
-        
-        if remain > 0: cur.next = ListNode(remain)
+        if remainder: curr.next = ListNode(remainder)
         return dummy.next
