@@ -9,7 +9,8 @@ class Node:
 
 class LRUCache:
     '''
-        Version: 1
+        Version: 1.5
+            Stop using dummy head/tail
         Idea:
             1. HashMap for key -> node
                 HashMap hold the whole node so as to have
@@ -28,10 +29,7 @@ class LRUCache:
     '''
     def __init__(self, capacity: int):
         self.capacity = capacity
-        self.left = Node(None, -1)
-        self.right = Node(None, -1)
-        self.right.prev=self.left
-        self.left.next = self.right
+        self.left = self.right = None
         self.cache = {}
     
     def log(func):
@@ -43,18 +41,26 @@ class LRUCache:
             return result
         return wrap
     
+    def _append(self, node):
+        if not self.left: 
+            self.left = self.right = node
+        else:
+            node.prev = self.right
+            node.next = None
+            self.right.next = node
+            self.right = node
+    def _remove(self, node):
+        if node == self.left: self.left = node.next
+        if node == self.right: self.right = node.prev
+        if node.next: node.next.prev = node.prev
+        if node.prev: node.prev.next = node.next
+        
     # @log
     def get(self, key: int) -> int:
         if key not in self.cache: return -1
         node = self.cache[key]
-        # stich
-        node.prev.next = node.next
-        node.next.prev = node.prev
-        # update order
-        node.prev, node.next = self.right.prev, self.right
-        self.right.prev.next = node
-        self.right.prev = node
-        
+        self._remove(node)
+        self._append(node)
         return node.value
 
     # @log
@@ -63,22 +69,18 @@ class LRUCache:
         if key in self.cache: # override value and stich neighbors
             self.cache[key].value = value
             node = self.cache[key]
-            node.prev.next = node.next
-            node.next.prev = node.prev
+            self._remove(node)
         else: # create and write cache
             node = Node(key, value)
             self.cache[key] = node
         
         # update order relative to the end
-        node.prev, node.next = self.right.prev, self.right
-        self.right.prev.next = node
-        self.right.prev = node
+        self._append(node)
         
         # correction if over cap
         if len(self.cache) > self.capacity:
-            self.cache.pop(self.left.next.key)
-            self.left.next = self.left.next.next
-            self.left.next.prev = self.left
+            self.cache.pop(self.left.key)
+            self._remove(self.left)
                         
 
 # Your LRUCache object will be instantiated and called as such:
