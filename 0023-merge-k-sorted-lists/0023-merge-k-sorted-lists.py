@@ -18,8 +18,10 @@ class Solution:
                 -> 2n (2 cause once in child merges and
                     another time at the last merge)
             3. -> Total O(nlogk)
-        - Space: O(logk) cause have to store result
-            of sub-problems
+        - Space: O(k/2) cause the first level of bottom up
+            div-conq store reference to the merged lists
+            which is half of original
+            -> O(k)
     '''
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         def merge(l1, l2):
