@@ -6,22 +6,20 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 1
-        Idea:
-            Invert all child and swap
-            Note that no need to check for leaf
-            The only edge case is if none return none
-        Complexity:
-        - Time: O(n) with n being total vertices (V)
-            Or O(b^d) (branching factor b, depth d)
-        - Space: O(log(n)*2) for the call stack
-            Cause it calls down depth first 
-            -> and at each node you need to store it's two edges
-            -> stack is equal to depth of tree
-            -> log(n) * 2 -> O(log(n)) -> O(d) (depth)
+        Version: 2
+            Non recursive with stack
+        Idea: DFS with stack
+        Compleixty: Same
+        - Time: O(n)
+        - Space: O(log(n)) = O(d)
     '''
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        if not root: return root
+        stack = [root]
+        while stack:
+            curr = stack.pop()
+            if not curr: continue
+            curr.left, curr.right = curr.right, curr.left
+            stack.append(curr.right)
+            stack.append(curr.left)
         
-        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
         return root
