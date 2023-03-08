@@ -5,11 +5,21 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+        Idea:
+            Invert all child and swap
+            Note that no need to check for leaf
+            The only edge case is if none return none
+        Complexity:
+        - Time: O(n)
+        - Space: O(log(n)) for the call stack
+            Cause it calls down depth first 
+            -> stack is equal to depth of tree
+            -> log2(n)
+    '''
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root: return root
         
-        invLeft = self.invertTree(root.left)
-        invRight = self.invertTree(root.right)
-        
-        root.left, root.right = invRight, invLeft
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
         return root
