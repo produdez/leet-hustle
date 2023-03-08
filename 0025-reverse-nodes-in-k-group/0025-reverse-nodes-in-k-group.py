@@ -4,6 +4,22 @@
 #         self.val = val
 #         self.next = next
 class Solution:
+    '''
+        Version: 1
+        Idea:
+        1. Use slow/fast pointer k steps apart
+        2. Reverse between the slow and fast pointer everytime
+            there is space to do so
+        3. Use dummy node so that
+            Slow pointer is always BEFORE the reverse list
+            Fast pointer is always at the end (new head) of reverse
+                list
+        Complexity:
+        - Time: O(2n) -> O(n)
+            - One for iterate with fast ptr
+            - One for reversing
+        - Space: O(1)
+    '''
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
         def reverse(start, end):
             prev = end.next
