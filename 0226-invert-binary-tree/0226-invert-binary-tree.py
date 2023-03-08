@@ -12,11 +12,13 @@ class Solution:
             Note that no need to check for leaf
             The only edge case is if none return none
         Complexity:
-        - Time: O(n)
-        - Space: O(log(n)) for the call stack
+        - Time: O(n) with n being total vertices (V)
+            Or O(b^d) (branching factor b, depth d)
+        - Space: O(log(n)*2) for the call stack
             Cause it calls down depth first 
+            -> and at each node you need to store it's two edges
             -> stack is equal to depth of tree
-            -> log2(n)
+            -> log(n) * 2 -> O(log(n)) -> O(d) (depth)
     '''
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         if not root: return root
