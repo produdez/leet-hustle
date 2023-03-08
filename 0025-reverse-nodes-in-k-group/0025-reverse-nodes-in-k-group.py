@@ -19,16 +19,13 @@ class Solution:
         dummy_head = ListNode(next=head)
         slow = fast = dummy_head
         
-        counter = k
-        while fast is not None:
-            if counter > 0: 
-                fast = fast.next 
-                counter -= 1
-                continue
+        while True:
+            for i in range(k):
+                if not fast.next: return dummy_head.next
+                fast = fast.next
             
             new_start = slow.next
             slow.next = reverse(slow.next, fast)
             slow = fast = new_start
-            counter = k
         
-        return dummy_head.next
+        raise Exception('Execution should never reach this exp')
