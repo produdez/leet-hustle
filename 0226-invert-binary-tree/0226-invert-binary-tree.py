@@ -19,19 +19,13 @@ class Solution:
 
         curr = root
         while curr:
-            # print(f'at: {curr.val}')
-            cycle = left_most(curr)
-            # print(f'left_most of {curr.val} is {cycle.val if cycle else None}')
-            if not cycle or cycle.left == curr: # means have cycle
-                # swap
-                if cycle: cycle.left = None
-                # print(f'swapping at: {curr.val}')
-                curr.left, curr.right = curr.right, curr.left
+            last_left = left_most(curr)
+            if not last_left or last_left.left == curr: 
+                # remove link if there's a used cycle
+                if last_left: last_left.left = None
+                curr.left, curr.right = curr.right, curr.left # swap
                 curr = curr.left
             else:
-                # link
-                des = descendant(curr)
-                des.right = curr
-                # print(f'descendant of {curr.val} is {des.val}')
+                descendant(curr).right = curr
                 curr = curr.left
         return root
