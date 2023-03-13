@@ -6,24 +6,24 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 2
-        Idea: Stack
+        Version: 3
+        Idea: BFS
         Complexity: 
         - Time: O(n)
         - Space: O(d)
     '''
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        stack = [(root, 0)]
-        maxDepth = 0
-        while stack:
-            curr, depth = stack.pop()
-            if curr:
-                stack.append((curr.left, depth + 1))
-                stack.append((curr.right, depth + 1))
-            else:
-                # only update at leaf to save some ops
-                maxDepth = max(depth, maxDepth)
-        return maxDepth
+        if not root: return 0
+        queue = deque([root])
+        level = 0
+        while queue:
+            level += 1
+            # iterate all nodes in same level
+            for _ in range(len(queue)):
+                node = queue.popleft()
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+        return level
             
             
             
