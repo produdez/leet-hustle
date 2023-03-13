@@ -11,8 +11,17 @@ class Solution:
             return max(depth(root.left), depth(root.right)) + 1
         
         if not root: return 0
-        return max(
-            self.diameterOfBinaryTree(root.left),
-            self.diameterOfBinaryTree(root.right),
-            depth(root.left) + depth(root.right)
-        )
+        l_depth = depth(root.left)
+        r_depth = depth(root.right)
+        if l_depth == r_depth:
+            return l_depth + r_depth
+        elif l_depth > r_depth:
+            return max(
+                self.diameterOfBinaryTree(root.left),
+                l_depth + r_depth
+            )
+        else:
+            return max(
+                self.diameterOfBinaryTree(root.right),
+                l_depth + r_depth
+            )
