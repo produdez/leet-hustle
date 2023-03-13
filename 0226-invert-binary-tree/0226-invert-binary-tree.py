@@ -7,8 +7,7 @@
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
         def left_most(root):
-            temp = root.left
-            if not temp: return None
+            temp = root
             while temp.left and temp.left != root: temp = temp.left
             return temp
         
@@ -19,13 +18,17 @@ class Solution:
 
         curr = root
         while curr:
-            last_left = left_most(curr)
-            if not last_left or last_left.left == curr: 
-                # remove link if there's a used cycle
-                if last_left: last_left.left = None
-                curr.left, curr.right = curr.right, curr.left # swap
+            if not curr.left:
+                curr.left, curr.right = curr.right, curr.left
                 curr = curr.left
             else:
-                descendant(curr).right = curr
-                curr = curr.left
+                last_left = left_most(curr)
+                if not last_left.left: # no cycle
+                    descendant(curr).right = curr
+                    curr = curr.left
+                else: 
+                    # means there's a cycle back to root
+                    if last_left: last_left.left = None
+                    curr.left, curr.right = curr.right, curr.left # swap
+                    curr = curr.left
         return root
