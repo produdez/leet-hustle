@@ -6,17 +6,25 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 1
-        Idea: Recursion
+        Version: 2
+        Idea: Stack
         Complexity: 
         - Time: O(n)
         - Space: O(d)
     '''
     def maxDepth(self, root: Optional[TreeNode]) -> int:
-        if not root: return 0
-        
-        return 1 + max(
-            self.maxDepth(root.left),
-            self.maxDepth(root.right)
-        )
+        stack = [(root, 0)]
+        maxDepth = 0
+        while stack:
+            curr, depth = stack.pop()
+            if curr:
+                stack.append((curr.left, depth + 1))
+                stack.append((curr.right, depth + 1))
+            else:
+                # only update at leaf to save some ops
+                maxDepth = max(depth, maxDepth)
+        return maxDepth
+            
+            
+            
         
