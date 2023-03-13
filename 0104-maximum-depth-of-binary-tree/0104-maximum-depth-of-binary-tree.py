@@ -10,7 +10,8 @@ class Solution:
         Idea: BFS
         Complexity: 
         - Time: O(n)
-        - Space: O(d)
+        - Space: O(n) cause have to at least hold last level
+            which is 2n-1 nodes in queue
     '''
     def maxDepth(self, root: Optional[TreeNode]) -> int:
         if not root: return 0
