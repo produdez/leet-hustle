@@ -5,6 +5,22 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+            NOTE: this imp is very POOR
+        Idea:
+            Diameter = max(
+                depth left + depth right,
+                dia_left,
+                dia_right
+            )
+            If imbalance, check the longer side
+            If balanced -> return sum depth
+
+        Complexity:
+        - Time: Unsure, could be 3n or n^2
+        - Space: Recursive so somewhere at O(2d or 3d)
+    '''
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         def depth(root):
             if not root: return 0
