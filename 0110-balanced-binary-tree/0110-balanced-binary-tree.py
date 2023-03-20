@@ -5,6 +5,14 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+        Idea: 
+            Recursive post-order + global var to keep track of balance-ness of all nodes
+        Complexity:
+        - Time: O(n)
+        - Space: O(d) - worse O(n)
+    '''
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
         balanced = [True]
         def depth(root):
