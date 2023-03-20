@@ -6,28 +6,24 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 2
+        Version: 1.5
+            Add early stop 
         Idea: 
-            Iterative post-order
+            Recursive post-order + global var to keep track of balance-ness of all nodes
         Complexity:
         - Time: O(n)
         - Space: O(d) - worse O(n)
     '''
     def isBalanced(self, root: Optional[TreeNode]) -> bool:
-        if not root: return True
-        stack = [root]
-        depth = {None: -1}
-        while stack:
-            node = stack[-1]
-            if node.left in depth and node.right in depth:
-                stack.pop()
-                if abs(depth[node.left] - depth[node.right]) > 1:
-                    return False
-                
-                depth[node] = 1 + max(depth[node.left], depth[node.right])
-                if node.left: del depth[node.left]
-                if node.right: del depth[node.right]
-            else:
-                if node.left: stack.append(node.left)
-                if node.right: stack.append(node.right)
-        return True
+        balanced = [True]
+        def depth(root):
+            if not root or not balanced[0]: return -1
+            leftHeight = depth(root.left)
+            rightHeight = depth(root.right)
+            
+            if abs(leftHeight - rightHeight) > 1: 
+                balanced[0] = False
+            return 1 + max(leftHeight, rightHeight)
+        
+        depth(root)
+        return balanced[0]
