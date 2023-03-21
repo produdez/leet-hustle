@@ -6,25 +6,29 @@
 #         self.right = right
 class Solution:
     '''
-        Version 1:
-            Recursion?? non-optimal (i think)
+        Version 2:
+            Stack naive dfs approach
         Idea:
-            Move until have an equal node and check if the sub-tree from that node 
-            is equal
-        Complexity: 
-        - Time: O(nm)?
-        - Space: O(log(n)log(m))??
+            check match at each step while dfs-sing
+        Complexity:
+        - Time: O(mn)
+        - Space: O(logmlogn)
     '''
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        def sameTree(p,q): 
+        if not root: return False
+        stack = [root]
+        
+        def isSame(p,q):
             if not p and not q: return True
             if not p or not q: return False
             if p.val != q.val: return False
-
-            return sameTree(p.left, q.left) and sameTree(p.right, q.right)
+            return isSame(p.left, q.left) and isSame(p.right, q.right)
         
-        if not root: return False
-        
-        return (sameTree(root, subRoot) or
-                self.isSubtree(root.left, subRoot) or
-                self.isSubtree(root.right, subRoot))
+        while stack:
+            node = stack.pop()
+            if node.val == subRoot.val and isSame(node, subRoot):
+                return True
+            
+            if node.right: stack.append(node.right)
+            if node.left: stack.append(node.left)
+        return False
