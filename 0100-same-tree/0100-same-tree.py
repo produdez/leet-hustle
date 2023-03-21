@@ -5,6 +5,16 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+            Stack 
+        Idea:
+            DFS, same
+            Note the cases
+        Complexity:
+        - Time: O(n)
+        - Space: O(d) worst O(n)
+    '''
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
         stack = [(p,q)]
         
