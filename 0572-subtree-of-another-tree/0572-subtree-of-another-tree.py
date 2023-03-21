@@ -12,6 +12,7 @@ class Solution:
             if p.val != q.val: return False
 
             return sameTree(p.left, q.left) and sameTree(p.right, q.right)
+        
         if not subRoot: return True # edge case early stop
         if not root: return False
         
