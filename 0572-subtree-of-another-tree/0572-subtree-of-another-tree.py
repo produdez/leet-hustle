@@ -13,10 +13,8 @@ class Solution:
 
             return sameTree(p.left, q.left) and sameTree(p.right, q.right)
         
-        if not subRoot: return True # edge case early stop
         if not root: return False
         
-        if sameTree(root, subRoot): return True
-                
-        return (self.isSubtree(root.left, subRoot) or
+        return (sameTree(root, subRoot) or
+                self.isSubtree(root.left, subRoot) or
                 self.isSubtree(root.right, subRoot))
