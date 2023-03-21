@@ -12,7 +12,10 @@ class Solution:
             Every node saves the hash of their child and we just compare the hash
         Complexity:
         - Time: O(m + n)
-        - Space: O(log(n) + log(m)) cause we recursive both trees worse case (n+m)
+        - Space: O(log(n) + log(m) + m + n) 
+            cause every node stores hash -> m+n
+            cause we recursive both trees -> log(..) worse case (n+m)
+            -> Total O(m+n) (worse than other approach but much faster)
     '''
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:       
         def merkle(root):
