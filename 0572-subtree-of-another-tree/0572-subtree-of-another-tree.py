@@ -5,6 +5,16 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version 1:
+            Recursion?? non-optimal (i think)
+        Idea:
+            Move until have an equal node and check if the sub-tree from that node 
+            is equal
+        Complexity: 
+        - Time: O(nm)?
+        - Space: O(log(n)log(m))??
+    '''
     def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
         def sameTree(p,q): 
             if not p and not q: return True
