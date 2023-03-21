@@ -7,8 +7,8 @@
 
 class Solution:
     '''
-        Version: 1
-            Recursive
+        Version: 2
+            Iterative
         Idea:
             Since BST, a node that's between p <= node <= q 
             is the LCA
@@ -16,12 +16,13 @@ class Solution:
             and if move left, loose the larger node as a child
         Complexity:
         - Time: O(d)
-        - Space: O(d) call stack
+        - Space: O(1)
     '''
     def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
-        if root.val < p.val and root.val < q.val:
-            return self.lowestCommonAncestor(root.right, p, q)
-        if root.val > p.val and root.val > q.val:
-            return self.lowestCommonAncestor(root.left, p, q)
-        
-        return root
+        while True:
+            if root.val > p.val and root.val > q.val: root = root.left
+            elif root.val < p.val and root.val < q.val: root = root.right
+            else:
+                return root
+
+        raise Exception('This function should not reach this part')
