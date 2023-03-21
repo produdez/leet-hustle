@@ -6,29 +6,23 @@
 #         self.right = right
 class Solution:
     '''
-        Version 2:
-            Stack naive dfs approach
+        Version: 3
         Idea:
-            check match at each step while dfs-sing
-        Complexity:
-        - Time: O(mn)
-        - Space: O(logmlogn)
+            Merkle hash
+            Every node saves the hash of their child and we just compare the hash
     '''
-    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
-        if not root: return False
-        stack = [root]
+    def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:       
+        def merkle(root):
+            if not root: return '#'
+            root.merkle = str(hash(merkle(root.left) + str(root.val) + merkle(root.right)))
+            return root.merkle
         
-        def isSame(p,q):
-            if not p and not q: return True
-            if not p or not q: return False
-            if p.val != q.val: return False
-            return isSame(p.left, q.left) and isSame(p.right, q.right)
+        merkle(root)
+        merkle(subRoot)
         
-        while stack:
-            node = stack.pop()
-            if node.val == subRoot.val and isSame(node, subRoot):
-                return True
+        def dfs(root):
+            if not root: return False
             
-            if node.right: stack.append(node.right)
-            if node.left: stack.append(node.left)
-        return False
+            return root.merkle == subRoot.merkle or dfs(root.left) or dfs(root.right)
+        
+        return dfs(root)
