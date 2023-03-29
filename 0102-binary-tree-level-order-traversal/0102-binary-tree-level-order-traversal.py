@@ -5,21 +5,31 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+        Idea:
+            In-order with queue
+            Each level of node is en-queue and processed in order
+        Complexity:
+        - Time: O(n)
+        - Space: O(last_level)
+    '''
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root: return root
         
-        queue = collections.deque([[root]])
+        current_level = [root]
         result = []
-        while queue:
-            current_level = []
+        while current_level:
             next_level = []
-            for node in queue.popleft():
-                current_level.append(node.val)
+            traverse = []
+            for node in current_level:
+                traverse.append(node.val)
                 if node.left: next_level.append(node.left)
                 if node.right: next_level.append(node.right)
             
-            result.append(current_level)
-            if next_level: queue.append(next_level)
+            result.append(traverse)
+            current_level = next_level
+            
             
         return result
             
