@@ -8,8 +8,7 @@ class Solution:
     '''
         Version: 1
         Idea:
-            In-order with queue
-            Each level of node is en-queue and processed in order
+            In-order traverse one level at a time
         Complexity:
         - Time: O(n)
         - Space: O(last_level)
