@@ -6,8 +6,8 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 1
-            DFS stack
+        Version: 2
+            DFS recursive
     '''
     def goodNodes(self, root: TreeNode) -> int:
 
