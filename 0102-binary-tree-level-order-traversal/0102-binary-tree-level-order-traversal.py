@@ -6,9 +6,9 @@
 #         self.right = right
 class Solution:
     '''
-        Version: 1
+        Version: 1.5
         Idea:
-            In-order traverse one level at a time
+            Use a singular queue only instead of keeping a level array
         Complexity:
         - Time: O(n)
         - Space: O(last_level)
@@ -16,19 +16,17 @@ class Solution:
     def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
         if not root: return root
         
-        current_level = [root]
+        queue = collections.deque([root])
         result = []
-        while current_level:
-            next_level = []
-            traverse = []
-            for node in current_level:
-                traverse.append(node.val)
-                if node.left: next_level.append(node.left)
-                if node.right: next_level.append(node.right)
-            
-            result.append(traverse)
-            current_level = next_level
-            
+        while queue:
+            level = []
+            for i in range(len(queue)):
+                node = queue.popleft()
+                level.append(node.val)
+                if node.left: queue.append(node.left)
+                if node.right: queue.append(node.right)
+            result.append(level)
+                
             
         return result
             
