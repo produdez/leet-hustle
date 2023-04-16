@@ -5,6 +5,10 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+            DFS stack
+    '''
     def goodNodes(self, root: TreeNode) -> int:
         if not root: return 0
         stack = [(root, root.val)]
