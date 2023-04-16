@@ -10,13 +10,14 @@ class Solution:
             DFS stack
     '''
     def goodNodes(self, root: TreeNode) -> int:
-        if not root: return 0
-        stack = [(root, root.val)]
-        count = 0
-        while stack:
-            cur, cur_max = stack.pop()
-            if cur.val >= cur_max: count += 1
-                
-            if cur.left: stack.append((cur.left, max(cur_max, cur.left.val)))
-            if cur.right: stack.append((cur.right, max(cur_max, cur.right.val)))
-        return count
+
+        def dfs(root, maxVal):
+            if not root: return 0
+            
+            newMax = max(maxVal, root.val)
+            leftGood = dfs(root.left, newMax)
+            rightGood = dfs(root.right, newMax)
+            
+            return leftGood + rightGood + (1 if newMax == root.val else 0)
+        
+        return dfs(root, root.val)
