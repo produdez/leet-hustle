@@ -8,7 +8,6 @@ class Solution:
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def dfs_validate(root, min=None, max=None):
             if not root: return True
-            print(root.val, min,max)
             if min is not None and root.val <= min: return False
             if max is not None and root.val >= max: return False
             
