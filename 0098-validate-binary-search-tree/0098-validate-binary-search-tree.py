@@ -5,6 +5,11 @@
 #         self.left = left
 #         self.right = right
 class Solution:
+    '''
+        Version: 1
+            DFS
+        
+    '''
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
         def dfs_validate(root, min=None, max=None):
             if not root: return True
