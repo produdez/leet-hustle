@@ -11,13 +11,12 @@ class Solution:
         
     '''
     def isValidBST(self, root: Optional[TreeNode]) -> bool:
-        def dfs_validate(root, min=None, max=None):
+        def dfs_validate(root, min, max):
             if not root: return True
-            if min is not None and root.val <= min: return False
-            if max is not None and root.val >= max: return False
+            if not (root.val > min and root.val < max): return False
             
             return  dfs_validate(root.left, min, root.val) and \
                     dfs_validate(root.right, root.val, max)
         
-        return dfs_validate(root)
+        return dfs_validate(root, -math.inf, math.inf)
                 
