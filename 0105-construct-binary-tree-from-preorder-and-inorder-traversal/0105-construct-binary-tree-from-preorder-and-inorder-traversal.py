@@ -10,6 +10,8 @@ class Solution:
         root = TreeNode(preorder[0])
         # print(preorder, inorder)
         idx_root = inorder.index(root.val)
-        root.left = self.buildTree(preorder[1:idx_root + 1], inorder[:idx_root])
+        if idx_root == 0: pass
+        elif idx_root == 1: root.left = TreeNode(inorder[0])
+        else: root.left = self.buildTree(preorder[1:idx_root + 1], inorder[:idx_root])
         root.right = self.buildTree(preorder[idx_root+1:], inorder[idx_root+1 :])
         return root
