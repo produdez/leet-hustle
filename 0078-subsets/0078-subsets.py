@@ -1,19 +1,25 @@
 class Solution:
     '''
-        Version 2:
-            DFS properly
+        Version 3:
+            DFS using index to save space
         
     '''
     def subsets(self, nums: List[int]) -> List[List[int]]:
         result = []
-        def add(nums, start=[]):
-            if not nums: 
-                nonlocal result
-                result.append(start)
+        
+        cur_set = []
+        def dfs(num_idx):
+            if num_idx >= len(nums): # done
+                result.append(cur_set.copy())
                 return
             
-            add(nums[1:], start + [nums[0]])
-            add(nums[1:], start)
+            # add
+            cur_set.append(nums[num_idx])
+            dfs(num_idx+1)
             
-        add(nums)
+            # not add
+            cur_set.pop()
+            dfs(num_idx+1)
+        
+        dfs(0)
         return result
