@@ -1,7 +1,7 @@
 class Solution:
     '''
-        Version: 2.-1
-            Binary dfs but less efficient + cleaner code
+        Version: 2.-2
+            Binary dfs even cleaner code with NO EARLY STOP
     '''
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
@@ -12,18 +12,16 @@ class Solution:
             nonlocal csum
             if csum == target:
                 results.append(comb.copy())
-                return False
+                return
             
-            if i >= len(candidates) or csum > target: 
-                return False
+            if i >= len(candidates) or csum > target: return
             
             csum += candidates[i]
             comb.append(candidates[i])
-            good = dfs(i)
+            dfs(i)
             csum -= comb.pop()
             
-            if good: dfs(i+1)
-            return True
+            dfs(i+1)
     
         dfs(0)
         return results 
