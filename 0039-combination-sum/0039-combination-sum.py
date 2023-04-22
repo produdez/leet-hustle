@@ -1,4 +1,8 @@
 class Solution:
+    '''
+        Version: 1
+            My version of dfs, not very clean but efficient
+    '''
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
         results = []
