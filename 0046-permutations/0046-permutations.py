@@ -1,7 +1,10 @@
 class Solution:
     '''
         Version: 2
-            More intuitive
+            More intuitive and also less efficient
+            NOTE that it have the same idea that
+            for every char, we can fix it in one position and permutate the rest
+            => Looping that for all chars gives all permutations
         Idea:
             Perm(listN) = fixed_position_character + perm(listN - character)
             for every char in listN
