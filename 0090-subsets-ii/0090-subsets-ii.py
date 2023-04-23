@@ -1,4 +1,12 @@
 class Solution:
+    '''
+        Version: 1
+        Idea:
+            Same as subsets
+            but only allow use of duplicated element on one side of the tree
+            to make sure no duplicated sets.
+            
+    '''
     def subsetsWithDup(self, nums: List[int]) -> List[List[int]]:
         nums.sort()
         res = []
