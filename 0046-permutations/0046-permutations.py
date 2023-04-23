@@ -1,4 +1,12 @@
 class Solution:
+    '''
+        Version: 1
+            DFS with smart but confusing structure
+        Idea:
+            Basically, permu of list N (sized N)
+            = (permu of list N - an element) + append that element at the end
+            For every element in N
+    '''
     def permute(self, nums: List[int]) -> List[List[int]]:
         if len(nums) == 1: return [nums]
             
