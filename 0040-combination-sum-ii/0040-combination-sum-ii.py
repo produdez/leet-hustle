@@ -1,7 +1,7 @@
 class Solution:
     '''
         Version: 1
-        
+            Binary dfs with early stop
     '''
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
