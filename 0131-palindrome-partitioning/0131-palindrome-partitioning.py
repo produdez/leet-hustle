@@ -1,4 +1,9 @@
 class Solution:
+    '''
+        Version: 1
+            Naive backtrack with no optimization
+                split and keep splitting
+    '''
     def partition(self, s: str) -> List[List[str]]:
         def isPalin(s):
             for i in range(len(s) // 2):
