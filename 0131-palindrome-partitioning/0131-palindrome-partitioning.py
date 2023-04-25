@@ -10,8 +10,10 @@ class Solution:
         splits = []
 
         def isPalin(start, end):
-            for i in range(start, (start + end + 1) // 2):
-                if s[i] != s[start + end - i]: return False
+            while start < end:
+                if s[start] != s[end]: return False
+                start += 1
+                end -= 1
             return True
         
         def gen_splitted(splits):
