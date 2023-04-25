@@ -1,28 +1,37 @@
 class Solution:
     '''
-        Version: 1
-            Naive backtrack with no optimization
-                split and keep splitting
+        Version: 2
+            Backtrack split with index only not string slicing
     '''
     def partition(self, s: str) -> List[List[str]]:
-        def isPalin(s):
-            for i in range(len(s) // 2):
-                if s[i] != s[len(s) - (i+1)]: return False
+        def isPalin(start, end):
+            nonlocal s
+            for i in range(start, (start + end + 1) // 2):
+                if s[i] != s[start + end - i]: return False
             return True
 
-        def split(s, start=0):
+        def split(start=0):
+            nonlocal s
             res = []
             for i in range(start, len(s)):
-                head = s[: i+1]
-                if isPalin(head): 
-                    remain = s[i+1:]
-                    if not remain: 
-                        res.append([head])
+                if isPalin(start, i): 
+                    remain = i+1
+                    if remain >= len(s): 
+                        res.append([i])
                         break
+                    
                     remain_splits = split(remain)
                     for splits in remain_splits:
-                        res.append([head] + splits)
+                        res.append([i] + splits)
                         
             return res
         
-        return split(s)
+        print(split())
+        res = []
+        for splits in split():
+            lst = [s[:splits[0]+1]]
+            for i in range(1, len(splits)):
+                lst.append(s[splits[i-1]+1 : splits[i] + 1])
+            res.append(lst)
+        return res
+                
