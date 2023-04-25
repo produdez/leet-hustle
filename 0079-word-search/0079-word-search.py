@@ -6,16 +6,8 @@ class Solution:
             (-1, 0), # left
             (0, 1), # up
         ]
-        def print_board(board):
-            ender = '---------'
-            print(ender)
-            for line in board:
-                for char in line:
-                    print(char, end=', ')
-                print()
-            print(ender)
-            
-        def next_valid_positions(path):
+        path = []
+        def next_valid_positions():
             if len(path) < 1:
                 for i in range(len(board[0])):
                     for j in range(len(board)):
@@ -41,11 +33,12 @@ class Solution:
                 yield (new_x, new_y)
             return
 
-        def backtrack(path = []):
-            for next_pos in next_valid_positions(path):
+        def backtrack():
+            for next_pos in next_valid_positions():
                 path.append(next_pos)
-                if backtrack(path): return True
+                if backtrack(): return True
                 path.pop()
+            
             if len(path) == len(word): return True
             return False
 
