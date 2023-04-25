@@ -1,7 +1,6 @@
 class Solution:
     def partition(self, s: str) -> List[List[str]]:
         def isPalin(s):
-            if len(s) == 1: return True
             for i in range(len(s) // 2):
                 if s[i] != s[len(s) - (i+1)]: return False
             return True
