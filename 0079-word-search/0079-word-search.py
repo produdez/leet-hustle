@@ -17,16 +17,14 @@ class Solution:
             
         def next_valid_positions(path):
             if len(path) < 1:
-                starting_pos = []
                 for i in range(len(board[0])):
                     for j in range(len(board)):
-                        if board[j][i] == word[0]: starting_pos.append((i,j))
-                return starting_pos
-            
-            if len(path) >= len(word): return []
+                        if board[j][i] == word[0]: yield (i,j)
+                return
+
+            if len(path) >= len(word): return
             
             cur_x, cur_y = path[-1]
-            next_poses = []
             for dx, dy in POS_MOVES:
                 new_x, new_y = cur_x + dx, cur_y + dy
                 
@@ -40,21 +38,17 @@ class Solution:
                 # check repeated backtrack
                 if (new_x, new_y) in path: continue
                 
-                next_poses.append((new_x, new_y))
-            return next_poses
+                yield (new_x, new_y)
+            return
 
         def backtrack(path = []):
-            next_poses = next_valid_positions(path)
-            if not next_poses and len(path) == len(word):
-                return True
-            # print('next to try: ', next_poses)
-            for next_pos in next_poses:
+            for next_pos in next_valid_positions(path):
                 path.append(next_pos)
                 if backtrack(path): return True
                 path.pop()
+            if len(path) == len(word): return True
             return False
-        # print_board(board)
-        # print('word: ', word)
+
         
         if set(word) - set([i for row in board for i in row]): return False
         return backtrack()
