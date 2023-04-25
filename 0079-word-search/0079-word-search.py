@@ -4,6 +4,9 @@ class Solution:
             Now uses just an integer to represent index
             y = idx // len(board[0])
             x = idx % len(board[0])
+        
+        Much better space complexity since path representation
+        if simplified, does lose a tiny bit of time speed 
     '''
     def exist(self, board: List[List[str]], word: str) -> bool:
         POS_MOVES = [
@@ -27,7 +30,8 @@ class Solution:
                 total_board_size = len(board) * len(board[0])
                 i = 0
                 while i < total_board_size:
-                    if board[i // len(board[0])][i % len(board[0])] == word[0]: yield i
+                    if board[i // len(board[0])][i % len(board[0])] == word[0]:
+                        yield i
                     i += 1
                 return
 
@@ -52,24 +56,14 @@ class Solution:
             return
 
         def backtrack(path = []):
-            # print('path: ', path)
             for next_pos in next_valid_positions(path):
                 path.append(next_pos)
                 if backtrack(path): return True
                 path.pop()
             
-            if len(path) == len(word): 
-                # print('Final path:' , path)
-                res = ''
-                for pos in path:
-                    i, j = pos % len(board[0]), pos // len(board[0])
-                    res += board[j][i]
-                # print('word: ', res)
-                return True
+            if len(path) == len(word): return True
             return False
 
         
         if set(word) - set([i for row in board for i in row]): return False
-        # print_board(board)
-        # print('word: ', word)
         return backtrack()
