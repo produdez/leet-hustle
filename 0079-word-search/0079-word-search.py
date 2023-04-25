@@ -6,8 +6,8 @@ class Solution:
             (-1, 0), # left
             (0, 1), # up
         ]
-        path = []
-        def next_valid_positions():
+            
+        def next_valid_positions(path):
             if len(path) < 1:
                 for i in range(len(board[0])):
                     for j in range(len(board)):
@@ -33,10 +33,10 @@ class Solution:
                 yield (new_x, new_y)
             return
 
-        def backtrack():
-            for next_pos in next_valid_positions():
+        def backtrack(path = []):
+            for next_pos in next_valid_positions(path):
                 path.append(next_pos)
-                if backtrack(): return True
+                if backtrack(path): return True
                 path.pop()
             
             if len(path) == len(word): return True
