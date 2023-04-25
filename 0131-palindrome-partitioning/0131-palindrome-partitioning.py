@@ -24,7 +24,6 @@ class Solution:
                         
             return res
         
-        print(split())
         res = []
         for splits in split():
             lst = [s[:splits[0]+1]]
