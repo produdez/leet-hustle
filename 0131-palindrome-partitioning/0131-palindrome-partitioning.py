@@ -5,13 +5,11 @@ class Solution:
     '''
     def partition(self, s: str) -> List[List[str]]:
         def isPalin(start, end):
-            nonlocal s
             for i in range(start, (start + end + 1) // 2):
                 if s[i] != s[start + end - i]: return False
             return True
 
         def split(start=0):
-            nonlocal s
             res = []
             for i in range(start, len(s)):
                 if isPalin(start, i): 
