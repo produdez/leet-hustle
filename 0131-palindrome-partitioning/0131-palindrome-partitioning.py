@@ -1,7 +1,9 @@
 class Solution:
     '''
-        Version: 2
-            Backtrack split with index only not string slicing
+        Version: 3
+            More optimization with a shared split representation
+            and result appended when found
+            -> less passing params around
     '''
     def partition(self, s: str) -> List[List[str]]:
         res = []
@@ -28,14 +30,7 @@ class Solution:
                     splits.append(i)                    
                     split(i+1)
                     splits.pop()
-                                
-        # res = []
-        # split()
-        # for splits in split_cases:
-        #     lst = [s[:splits[0]+1]]
-        #     for i in range(1, len(splits)):
-        #         lst.append(s[splits[i-1]+1 : splits[i] + 1])
-        #     res.append(lst)
+
         split()
         return res
                 
