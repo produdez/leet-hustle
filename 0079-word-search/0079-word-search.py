@@ -1,4 +1,11 @@
 class Solution:
+    '''
+        Version: 1.5
+            Same as version 1 
+            but slight cleaner backtrack code
+            and uses generator
+        Same efficient and space when summited
+    '''
     def exist(self, board: List[List[str]], word: str) -> bool:
         POS_MOVES = [
             (1, 0), # right
