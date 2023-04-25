@@ -1,8 +1,7 @@
 class Solution:
     '''
-        Version: 2
-            Update to use set for faster checking
-            (STILL NOT EFFICIENT ENOUGH)
+        Version: 3
+            Mod the board directly
     '''
     def exist(self, board: List[List[str]], word: str) -> bool:
         POS_MOVES = [
@@ -21,19 +20,16 @@ class Solution:
                 print()
             print(ender)
 
-        def next_valid_positions(path, cur):
-            if len(path) < 1:
-                total_board_size = len(board) * len(board[0])
-                i = 0
-                while i < total_board_size:
-                    if board[i // len(board[0])][i % len(board[0])] == word[0]:
-                        yield i
-                    i += 1
+        def next_valid_positions(cur, path_len):
+            if not cur or path_len == 0:
+                for j in range(len(board)):
+                    for i in range(len(board[0])):
+                        if board[j][i] == word[0]: yield (i,j)
                 return
 
-            if len(path) >= len(word): return
+            if path_len >= len(word): return
             
-            cur_x, cur_y = cur % len(board[0]), cur // len(board[0])
+            cur_x, cur_y = cur
             for dx, dy in POS_MOVES:
                 new_x, new_y = cur_x + dx, cur_y + dy
                 
@@ -42,24 +38,24 @@ class Solution:
                 if new_y < 0 or new_y >= len(board): continue
                 
                 # check matching character
-                if board[new_y][new_x] != word[len(path)]: continue
+                if board[new_y][new_x] != word[path_len]: continue
                 
-                new_idx = new_y * len(board[0]) + new_x
                 # check repeated backtrack
-                if new_idx in path: continue
+                if board[new_y][new_x] == '#': continue
                 
-                yield new_idx
+                yield (new_x, new_y)
             return
 
-        def backtrack(path = set(), cur = None):
-            for next_pos in next_valid_positions(path, cur):
-                path.add(next_pos)
-                if backtrack(path, next_pos): return True
-                path.remove(next_pos)
+        def backtrack(cur = None, path_length = 0):
+            for next_x, next_y in next_valid_positions(cur, path_length):
+                temp = board[next_y][next_x]
+                board[next_y][next_x] = '#'
+                if backtrack((next_x, next_y), path_length + 1): return True
+                board[next_y][next_x] = temp
             
-            if len(path) == len(word): return True
+            if path_length == len(word): return True
             return False
 
         
-        if set(word) - set([i for row in board for i in row]): return False
+        # if set(word) - set([i for row in board for i in row]): return False
         return backtrack()
