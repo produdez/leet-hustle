@@ -16,20 +16,20 @@ class Solution:
                 end -= 1
             return True
         
-        def gen_splitted(splits):
-            lst = [s[:splits[0]+1]]
-            for i in range(1, len(splits)):
-                lst.append(s[splits[i-1]+1 : splits[i] + 1])
-            res.append(lst)
+        # def gen_splitted(splits):
+        #     lst = [s[:splits[0]+1]]
+        #     for i in range(1, len(splits)):
+        #         lst.append(s[splits[i-1]+1 : splits[i] + 1])
+        #     res.append(lst)
             
         def split(start=0):
             if start >= len(s):
-                gen_splitted(splits)
+                res.append(splits.copy())
                 return
 
             for i in range(start, len(s)):
                 if isPalin(start, i): 
-                    splits.append(i)                    
+                    splits.append(s[start: i+1])                    
                     split(i+1)
                     splits.pop()
 
