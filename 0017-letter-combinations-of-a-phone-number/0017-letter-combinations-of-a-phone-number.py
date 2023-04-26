@@ -13,7 +13,7 @@ class Solution:
         
         res = []
         def map_letters(i, prev=''):
-            if i >= len(digits):
+            if i == len(digits):
                 res.append(prev)
                 return 
 
