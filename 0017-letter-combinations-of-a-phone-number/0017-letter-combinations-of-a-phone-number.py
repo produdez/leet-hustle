@@ -11,19 +11,16 @@ class Solution:
             '9': ['w', 'x', 'y', 'z']
         }
         
-        
-        def map_letters(i):
-            if i >= len(digits): return
-            
+        res = []
+        def map_letters(i, prev=''):
+            if i >= len(digits):
+                res.append(prev)
+                return 
+
             mappings = MAP[digits[i]]
-            for _ in range(len(res)):
-                prev = res.popleft()
-                for mapping in mappings:
-                    res.append(prev + mapping)
-                  
-            map_letters(i+1)
+            for char in mappings:
+                map_letters(i+1, prev + char)
         
         if not digits: return []
-        res = collections.deque(MAP[digits[0]])
-        map_letters(1)
+        map_letters(0)
         return res
