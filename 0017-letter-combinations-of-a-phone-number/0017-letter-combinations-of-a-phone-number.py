@@ -17,8 +17,7 @@ class Solution:
                 res.append(prev)
                 return 
 
-            mappings = MAP[digits[i]]
-            for char in mappings:
+            for char in MAP[digits[i]]:
                 map_letters(i+1, prev + char)
         
         if not digits: return []
