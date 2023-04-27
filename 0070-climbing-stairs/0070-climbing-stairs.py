@@ -9,18 +9,16 @@ class Solution:
             + ways(n-2) # means try climb 2 step and climb the rest
             => This creates a tree with many repeated steps
     '''
-    def climbStairs(self, n: int) -> int:
-        ways = [None] * n
-        
-        def recurClimb(n):
+    def climbStairs(self, n: int) -> int:        
+        def recurClimb(n, ways):
             if n == 1: res = 1
             elif n == 2: res = 2
             else:
                 if ways[n-1] is not None:
                     return ways[n-1]
-                res = recurClimb(n-1) + recurClimb(n-2)
+                res = recurClimb(n-1, ways) + recurClimb(n-2, ways)
 
             ways[n-1] = res
             return res
         
-        return recurClimb(n)
+        return recurClimb(n, [None] * n)
