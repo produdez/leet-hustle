@@ -1,7 +1,9 @@
 class Solution:
     '''
-        Version: 2
+        Version: 3
             Memoized Bottom up
+            but optimized since we only need 2 variables to keep track
+            of everything, no need for a gigantic array
         Idea:
             So u can climb 1 step or 2 steps
             Meaning ways to climb n steps
@@ -10,8 +12,9 @@ class Solution:
             => This creates a tree with many repeated steps
     '''
     def climbStairs(self, n: int) -> int: 
-        if n == 1: return 1
-        ways = [1,2]
-        for i in range(2, n):
-            ways.append(ways[i-1] + ways[i-2])
-        return ways[n-1]
+        one, two = 1, 2
+        for _ in range(n-1):
+            temp = two
+            two = one + two
+            one = temp
+        return one
