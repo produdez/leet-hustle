@@ -1,9 +1,9 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        memoize = {}
+        memoize = [None] * len(nums)
         def rob_from(start):
             if start >= len(nums): return 0
-            if start in memoize: return memoize[start]
+            if memoize[start] is not None: return memoize[start]
             
             best = 0
             for idx in range(start, len(nums)):
