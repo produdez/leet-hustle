@@ -3,10 +3,7 @@ class Solution:
         memoize = {}
         def rob_from(start):
             if start >= len(nums): return 0
-            # print('idx: ', start)
-            if start in memoize: 
-                # print('memoized')
-                return memoize[start]
+            if start in memoize: return memoize[start]
             
             best = 0
             for idx in range(start, len(nums)):
@@ -17,6 +14,5 @@ class Solution:
             
             memoize[start] = best
             return best
-        rob_from(0)
-        # print(memoize)
-        return memoize[0]
+        
+        return rob_from(0)
