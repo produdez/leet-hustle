@@ -1,15 +1,15 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
         memoize = [None] * len(nums)
-        def rob_backward(end):
-            if end < 0: return 0
+        def rob_from(start):
+            if start >= len(nums): return 0
             
-            if memoize[end] is None:
-                memoize[end] = max(
-                    rob_backward(end - 2) + nums[end],
-                    rob_backward(end - 1)
+            if memoize[start] is None:
+                memoize[start] = max(
+                    rob_from(start + 2) + nums[start],
+                    rob_from(start + 1)
                 )
             
-            return memoize[end]
+            return memoize[start]
         
-        return rob_backward(len(nums) - 1)
+        return rob_from(0)
