@@ -1,15 +1,14 @@
 class Solution:
     def rob(self, nums: List[int]) -> int:
-        memoize = [None] * len(nums)
-        def rob_from(start):
-            if start >= len(nums): return 0
-            
-            if memoize[start] is None:
-                memoize[start] = max(
-                    rob_from(start + 2) + nums[start],
-                    rob_from(start + 1)
-                )
-            
-            return memoize[start]
-        
-        return rob_from(0)
+        if len(nums) == 1: return nums[0]
+        prev, cur = nums[0], max(nums[0],nums[1])
+        for i in range(2, len(nums)):
+            print(prev,cur)
+            temp = cur
+            cur = max(
+                cur,
+                prev + nums[i]
+            )
+            prev = temp
+        # print(prev, cur)
+        return cur
