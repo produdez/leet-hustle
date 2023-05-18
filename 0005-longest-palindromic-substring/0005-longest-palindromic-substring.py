@@ -4,6 +4,11 @@ class Solution:
         Idea: Dynamic Programming
             Where if P(left, right) is Palin then P(left-1, right-1) is
             also palin if s[left] == s[right]
+        
+        Complexity:
+        - Time: O(n^2)
+        - Space: O(n^2)
+        Note: very slow, barely passes
     '''
     def longestPalindrome(self, s: str) -> str:
         if len(s) == 1: return s
