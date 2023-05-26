@@ -1,35 +1,40 @@
 class Solution:
     '''
-        Version: 1
-        Idea: Dynamic Programming
-            Where if P(left, right) is Palin then P(left-1, right-1) is
-            also palin if s[left] == s[right]
-        
+        Version: 2
+        Idea:
+            Normal algorithm
+            Instead of checking if all cases are palindrome 
+            We check all CENTERS what is the longest palin they can expand to
         Complexity:
-        - Time: O(n^2)
-        - Space: O(n^2)
-        Note: very slow, barely passes
+            - Time O(n^2): since we have n centers * n linear to check palin
     '''
     def longestPalindrome(self, s: str) -> str:
-        if len(s) == 1: return s
+        best_l, best_r = 0, 1
         
-        memoize = {}
-        memoize[(0,0)] = True
+        def expand_palin(center_idx):
+            if isinstance(center_idx, int):
+                l, r = center_idx, center_idx + 1
+            else:
+                l, r = int(center_idx - 0.5), int(center_idx + 1.5)
+                if s[l] != s[r-1]: return int(center_idx), int(center_idx)
+            
+            while l - 1 >= 0 and r + 1 <= len(s) and s[l-1] == s[r]:
+                l -= 1
+                r += 1
+            
+            return l, r
+            
+            
         
-        m_left, m_right = 0, 0
-
         for i in range(1, len(s)):
-            memoize[(i,i)] = True
-            if s[i] == s[i-1]: 
-                memoize[(i-1, i)] = True
-                m_left, m_right = i-1, i
+            l,r = expand_palin(i - 0.5)
+            # print(f'best palin from {i-0.5} is {s[l:r]}')
+            if (r-l) > (best_r - best_l): best_l, best_r = l, r
+                
+            l, r = expand_palin(i)
+            # print(f'best palin from {i} is {s[l:r]}')
+            if (r-l) > (best_r - best_l): best_l, best_r = l, r
+            
         
-        for l in range(3, len(s) + 1):
-            for i in range(0, len(s) - l + 1):
-                left, right = i, i+l-1
-                if memoize.get((left+1, right-1), False) and s[left] == s[right]:
-                    memoize[(left,right)] = True
-                    if l > m_right - m_left + 1:
-                        m_left, m_right = left, right
-
-        return s[m_left: m_right + 1]
+        return s[best_l: best_r]
+                
