@@ -1,18 +1,23 @@
 class Solution:
-    
+    '''
+        Version: 1
+            Backtracking with DP memoize
+        Idea:
+            Every case can be split 1 char or 2 char
+            So check all cases (n^2)
+            But since there's repeated work, we use memoize
+        Complexity: 
+        - Time: O(n) - reduced from O(n^2) of backtracking
+        - Space: O(n) - result of decoding at each index is saved
+    '''
     def numDecodings(self, s: str) -> int:
         memoize = {}
         def valid(char):
-            
             if not char or char[0] == '0': return False
-            
             num = int(char)
-            res = num > 0 and num <= 26
-            # print('validating: ', char, res)
-            return res
+            return num > 0 and num <= 26
         
         def countDec(start):
-            # print('counting: ', s[start:], ' start: ', start)
             if start in memoize: return memoize[start]
             
             if start == len(s):
@@ -23,7 +28,7 @@ class Solution:
                 if valid(s[start: start+2]): total += countDec(start+2)
             else:
                 total = 0 
-            # print('total: ', total)
+            
             memoize[start] = total
             return total
         
