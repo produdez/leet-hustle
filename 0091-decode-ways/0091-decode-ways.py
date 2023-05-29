@@ -1,6 +1,7 @@
 class Solution:
     '''
-        Version: 1
+        Version: 1.5
+            Update: add base case of countDec(len(s)) == 1
             Backtracking with DP memoize
         Idea:
             Every case can be split 1 char or 2 char
@@ -11,23 +12,19 @@ class Solution:
         - Space: O(n) - result of decoding at each index is saved
     '''
     def numDecodings(self, s: str) -> int:
-        memoize = {}
-        def valid(char):
-            if not char or char[0] == '0': return False
-            num = int(char)
-            return num > 0 and num <= 26
+        memoize = {len(s): 1}
         
         def countDec(start):
             if start in memoize: return memoize[start]
-            
-            if start == len(s):
-                total = 1
-            elif start < len(s):
-                total = 0
-                if valid(s[start]): total += countDec(start+1)
-                if valid(s[start: start+2]): total += countDec(start+2)
+            if start >= len(s) or s[start] == '0': total = 0
             else:
-                total = 0 
+                total = countDec(start+1)
+                if start + 1 < len(s) and \
+                    (
+                        s[start] == '1' or 
+                        (s[start] == '2' and s[start+1] in '0123456')
+                    ):
+                    total += countDec(start+2)
             
             memoize[start] = total
             return total
