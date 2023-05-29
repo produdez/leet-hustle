@@ -12,18 +12,19 @@ class Solution:
     '''
     def numDecodings(self, s: str) -> int:
         # this is for idx len(s - 1) and len(s)
-        nxt, nxt2 = (0, 1) if s[-1] == '0' else (1, 1)
+        nxt = [0,1] if s[-1] == '0' else [1,1]
+        
         def countDecRev(start):
-            nonlocal nxt, nxt2
-            if start < 0: return nxt
+            if start < 0: return nxt[0]
             
-            total = 0
-            if s[start] != '0': total += nxt
-            if s[start] == '1' or \
-                (s[start] == '2' and s[start+1] in '0123456'):
-                total += nxt2
+            if s[start] == '0': total = 0
+            else:
+                total = nxt[0]
+                if s[start] == '1' or \
+                    (s[start] == '2' and s[start+1] in '0123456'):
+                    total += nxt[1]
             
-            nxt, nxt2 = total, nxt
+            nxt[0], nxt[1] = total, nxt[0]
             return countDecRev(start - 1)
             
         return countDecRev(len(s) - 2)
