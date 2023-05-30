@@ -10,13 +10,13 @@ class Solution:
             
             best = math.inf
             for coin in coins:
-                if amount < coin: continue
-                remain = amount - coin
-                
-                res = dfs(remain) + 1
+                if amount < coin: break
+
+                res = dfs(amount - coin) + 1
                 if res > 0: best = min(res, best)
             
             memoize[amount] = -1 if best == math.inf else best
             return memoize[amount]
-
-        return dfs(amount)
+        
+        dfs(amount)
+        return memoize[amount]
