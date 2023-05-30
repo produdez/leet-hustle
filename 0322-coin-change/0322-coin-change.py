@@ -10,7 +10,8 @@ class Solution:
             
             best = math.inf
             for coin in coins:
-                if amount < coin: break
+                # cant take coin in smaller order -> cant take anything
+                if amount < coin: break 
 
                 res = dfs(amount - coin) + 1
                 if res > 0: best = min(res, best)
@@ -18,5 +19,4 @@ class Solution:
             memoize[amount] = -1 if best == math.inf else best
             return memoize[amount]
         
-        dfs(amount)
-        return memoize[amount]
+        return dfs(amount)
