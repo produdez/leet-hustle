@@ -1,4 +1,15 @@
 class Solution:
+    '''
+        Version:
+            Backtrack with DP memoize 1D
+        Idea:
+            Take each coin and also track best #coin taken (smallest)
+            everything tracked in memoize function
+        Complexity:
+        - Time: O(m*d) reduced from O(m^d)
+            with m being #coin and d is average depth of tree (how many coins are checked to reach result/deadend)
+        - Space: O(d)
+    '''
     def coinChange(self, coins: List[int], amount: int) -> int:
         if amount == 0: return 0
         coins.sort()
