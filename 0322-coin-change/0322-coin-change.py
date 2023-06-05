@@ -11,23 +11,23 @@ class Solution:
         - Space: O(d)
     '''
     def coinChange(self, coins: List[int], amount: int) -> int:
-        if amount == 0: return 0
         coins.sort()
         memoize = {i: 1 for i in coins}
-        memoize[0] = 0
         
         def dfs(amount):
+            if amount == 0: return 0
             if amount in memoize: return memoize[amount]
             
             best = math.inf
             for coin in coins:
-                # cant take coin in smaller order -> cant take anything
-                if amount < coin: break 
-
+                if amount < coin: break
+                
                 res = dfs(amount - coin) + 1
                 if res > 0: best = min(res, best)
+                if res == 1: break # early stop for best case
             
-            memoize[amount] = -1 if best == math.inf else best
-            return memoize[amount]
+            if best == math.inf: best = -1
+            memoize[amount] = best
+            return best
         
         return dfs(amount)
