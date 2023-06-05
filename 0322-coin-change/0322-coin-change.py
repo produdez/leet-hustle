@@ -1,33 +1,32 @@
 class Solution:
     '''
-        Version:
-            Backtrack with DP memoize 1D
+        Version: 2
+            Bottom up DP
         Idea:
-            Take each coin and also track best #coin taken (smallest)
-            everything tracked in memoize function
-        Complexity:
-        - Time: O(m*d) reduced from O(m^d)
-            with m being #coin and d is average depth of tree (how many coins are checked to reach result/deadend)
-        - Space: O(d)
+            Work up from amount = 0 to amount = n
+        Complex:
+            Time: O(n * m) n~amount and m is avg#coin taken aka depth
+            Space: O(n)
     '''
     def coinChange(self, coins: List[int], amount: int) -> int:
+        if amount == 0: return 0
         coins.sort()
         memoize = {i: 1 for i in coins}
+        memoize[0] = 0
         
-        def dfs(amount):
-            if amount == 0: return 0
-            if amount in memoize: return memoize[amount]
+        def bottomUp(amount):
+            if amount in memoize: return amount
             
-            best = math.inf
+            res = math.inf
             for coin in coins:
                 if amount < coin: break
-                
-                res = dfs(amount - coin) + 1
-                if res > 0: best = min(res, best)
-                if res == 1: break # early stop for best case
+                if amount - coin in memoize:
+                    res = min(memoize[amount - coin] + 1, res)
             
-            if best == math.inf: best = -1
-            memoize[amount] = best
-            return best
+            if res != math.inf: memoize[amount] = res
         
-        return dfs(amount)
+        for i in range(1, amount + 1):
+            bottomUp(i)
+        
+        if amount in memoize: return memoize[amount]
+        return -1
