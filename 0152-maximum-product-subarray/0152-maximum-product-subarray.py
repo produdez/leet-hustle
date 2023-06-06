@@ -3,9 +3,7 @@ class Solution:
         res = nums[0]
         maxx, minn = 1, 1
         
-        print('nums: ', nums)
         for num in nums:
-            print('-num: ', num)
             if num == 0: 
                 res = max(res, 0)
                 maxx, minn = 1, 1
@@ -19,6 +17,5 @@ class Solution:
                 minn = min(num, temp_max * num)
                 res = max(res, maxx)
                 
-            print(f'max: {maxx}, min: {minn}, best: {res}')
             
         return res
