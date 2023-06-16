@@ -23,7 +23,7 @@ class Solution:
             
             res = False
             for word in wordDict:
-                if word == s[start: start + len(word)]:
+                if word[0] == s[start] and word == s[start: start + len(word)]:
                     if check(start + len(word)): 
                         res = True
                         break
