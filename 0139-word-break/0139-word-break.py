@@ -14,16 +14,14 @@ class Solution:
         - Space: O(n) memoize
     '''
     def wordBreak(self, s: str, wordDict: List[str]) -> bool:
-        memoize = [None] * (len(s) + 1)
+        memoize = [False] * (len(s) + 1)
         memoize[-1] = True
         
         def check(i):
-            matched = False
             for word in wordDict:
                 if s[i] == word[0] and s[i: i+len(word)] == word: 
-                    matched = memoize[i + len(word)]
-                    if matched: break
-            memoize[i] = matched
+                    memoize[i] = memoize[i + len(word)]
+                if memoize[i]: break # always stop at first true
         
         for i in reversed(range(0, len(s))):
             check(i)
