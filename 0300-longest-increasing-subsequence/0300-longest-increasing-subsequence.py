@@ -2,6 +2,7 @@ class Solution:
     '''
         Version: 1
             DP bottom up
+            -> Cleaned up code
         Idea:
             Build the sequences from the right to left
             each cell in memoize is maxLe of sequence starting with number
@@ -9,15 +10,14 @@ class Solution:
         Complexity:
         - Time: O(n^2)
         - Space: O(n)
+        Note:
+            If not for dynamic, complexity would be O(2^n) cause for 
+            each element we have two choice to check
     '''
     def lengthOfLIS(self, nums: List[int]) -> int:
-        memoize = [0] * len(nums)
-        maxLen = 0
+        memoize = [1] * len(nums)
         for i in reversed(range(len(nums))):
-            l = 1
             for j in range(i + 1, len(nums)):
                 if nums[j] > nums[i]: 
-                    l = max(l, memoize[j] + 1)
-            memoize[i] = l
-            maxLen = max(l, maxLen)
-        return maxLen
+                    memoize[i] = max(memoize[i], memoize[j] + 1)
+        return max(memoize)
