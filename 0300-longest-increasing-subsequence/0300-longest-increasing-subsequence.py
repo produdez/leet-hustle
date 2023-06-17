@@ -1,4 +1,15 @@
 class Solution:
+    '''
+        Version: 1
+            DP bottom up
+        Idea:
+            Build the sequences from the right to left
+            each cell in memoize is maxLe of sequence starting with number
+            at that index
+        Complexity:
+        - Time: O(n^2)
+        - Space: O(n)
+    '''
     def lengthOfLIS(self, nums: List[int]) -> int:
         memoize = [0] * len(nums)
         maxLen = 0
