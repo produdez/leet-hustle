@@ -16,8 +16,10 @@ class Solution:
     '''
     def lengthOfLIS(self, nums: List[int]) -> int:
         memoize = [1] * len(nums)
+        maxLen = 1
         for i in reversed(range(len(nums))):
             for j in range(i + 1, len(nums)):
                 if nums[j] > nums[i]: 
                     memoize[i] = max(memoize[i], memoize[j] + 1)
-        return max(memoize)
+            maxLen = max(maxLen, memoize[i])
+        return maxLen
