@@ -4,20 +4,21 @@ class Solution:
     '''
     def canPartition(self, nums: List[int]) -> bool:
         
-        memoize = {}
-        
-        def validPartition(i, target):
-            if i >= len(nums): return False
-            if (i, target) in memoize: return memoize[i,target]
-            
-            memoize[i, target] = (
-                nums[i] == target or
-                validPartition(i + 1, target) or
-                validPartition(i + 1, target - nums[i])
-            )
-            return memoize[i, target]
-        
-        
         total = sum(nums)
-        if total % 2 != 0: return False 
-        return validPartition(0, total // 2)
+        if total % 2 == 1: return False
+        queue = [(len(nums) - 1, total // 2)]
+        memoize = set()
+        
+        while queue:
+            i, target = queue.pop(0)
+            if i < 0: continue
+            if (i,target) in memoize: continue
+            if target == nums[i]: return True
+            
+            memoize.add((i, target))
+            queue.append((i-1, target))
+            queue.append((i-1, target - nums[i]))
+        
+        return False
+            
+            
