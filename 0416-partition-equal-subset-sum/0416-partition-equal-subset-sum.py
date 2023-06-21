@@ -1,26 +1,31 @@
 class Solution:
     '''
-        Version 2: 
-            Bottom up 1d optimized 1/0 knapsack
+        Version: 3
+            Optimal set problem
+            
         Idea:
-            Build a 1d array representation of a 2d array for 1/0 knapsack
-            array[i][j] means can i sum to target j with first i elements from nums
-            array[i][j] = array[i-1][j] (sum to same target with less elem) 
-                or array[i-1][j-nums[i]] (sum to target reduced by current element)
+            Find halfsum and generate all sets to check if sum to that
+            Stop asap
         Complexity:
-        - Time: O(n * sum(nums))
-        - Space: O(sum(nums)) or O(n * sum(nums)) if not optimized
+        - Time: O(n*sum(nums)) armotized
+            Why? Technically it should be O(2^n) cause there are O(2^n) subsets
+            But there are only at most sum(nums) distinct sums so it's reduced
+            down to O(n * sum(nums))
+            And it perform better than knapsack depending on the set distribution
+        - Space: O(sum(nums))
     '''
     def canPartition(self, nums: List[int]) -> bool:
         total = sum(nums)
         if total % 2 == 1: return False
-
         
-        target = total // 2
-        dp = [False] * (target + 1)
-        dp[0] = True
+        halfSum = total // 2
+        targets = {0}
+        
         for num in nums:
-            for i in reversed(range(target + 1)):
-                if i - num >= 0: 
-                    dp[i] = dp[i] or dp[i - num]
-        return dp[target]
+            newTargets = []
+            for target in targets:
+                s = target + num
+                if s == halfSum: return True
+                if s < halfSum: newTargets.append(s)
+            targets.update(newTargets)
+        return False
