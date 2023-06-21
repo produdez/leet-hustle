@@ -9,7 +9,8 @@ class Solution:
         for num in nums:
             newTargets = []
             for target in targets:
-                if target + num == halfSum: return True
-                if target + num < halfSum: newTargets.append(target + num)
+                s = target + num
+                if s == halfSum: return True
+                if s < halfSum: newTargets.append(s)
             targets.update(newTargets)
         return False
