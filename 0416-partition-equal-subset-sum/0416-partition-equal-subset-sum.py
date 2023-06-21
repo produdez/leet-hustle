@@ -10,7 +10,6 @@ class Solution:
             newTargets = []
             for target in targets:
                 if target + num == halfSum: return True
-                if target + num > halfSum: continue # extra optimization
-                newTargets.append(target + num)
+                if target + num < halfSum: newTargets.append(target + num)
             targets.update(newTargets)
         return False
