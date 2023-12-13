@@ -32,7 +32,7 @@ class Solution:
             res |= v << count
 
         if res >> BIT_COUNT:
-            res = ~((0b11111111111 & ~res) + 1) + 1
+            res = ~((((1 << BIT_COUNT) - 1) & ~res) + 1) + 1
         return res
     
     
