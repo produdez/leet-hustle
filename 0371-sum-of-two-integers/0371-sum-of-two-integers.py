@@ -3,54 +3,34 @@ class Solution:
         '''
             Implement 2's complement sum
         '''
-
-
-        lookupTable = {
-            (1,1,1): (1,1),
-            (1,1,0): (0,1),
-
-            (0,1,0): (1,0),
-            (1,0,0): (1,0),
-
-            (0,1,1): (0,1),
-            (1,0,1): (0,1),
-
-            (0,0,0): (0,0),
-            (0,0,1): (1,0),
-        }
-
+        
+        def calc(a,b,c):
+            carry = (a and b) or (a and c) or (b and c)
+            value = (a and b and c) or (not carry and (a or b or c))
+            return value, carry
+        
         BIT_COUNT = 10
 
         i,j,c = 0, 0,0
-        res = 0 # extra place hold bit
-        # print('---------------')
-        # print('starting: ', a,b)
-        # print('init res: ', bin(res))
+        res = 0
+
         count = 0
         while (a or b) and count < BIT_COUNT + 1:
             i = a & 1
             j = b & 1
+            v,c = calc(i,j,c)
 
-            # print('i,j,c: ', i,j,c)
-            v, c = lookupTable[(i,j,c)]
-
-            # print('v,c: ', v,c)
             res |= v << count
-
-            # print('res: ', res, bin(res))
 
             a >>= 1
             b >>= 1
             count += 1
 
-        # print('final count: ', count)
         if count < BIT_COUNT + 1:
-            # print('final adjust')
-            v, _ = lookupTable[(0,0,c)] # final carry
+            # final carry
+            v, _ = calc(0,0,c)
             res |= v << count
 
-
-        # print('final result: ', res, bin(res))
         if res >> BIT_COUNT:
             res = ~((0b11111111111 & ~res) + 1) + 1
         return res
