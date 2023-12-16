@@ -11,14 +11,11 @@ class Solution:
             if cur[1] < nxt[0]:
                 res.append(cur)
                 cur = nxt
-            elif cur[0] <= nxt[1]:
+            else:  
                 cur = [
                     min(cur[0], nxt[0]),
                     max(cur[1], nxt[1])
                 ]
-            else:
-                res.append(nxt)
-                cur = None
                 
-        if cur: res.append(cur)
+        res.append(cur)
         return res
