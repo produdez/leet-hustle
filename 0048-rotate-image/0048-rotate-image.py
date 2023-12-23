@@ -1,7 +1,13 @@
 class Solution:
     def rotate(self, matrix: List[List[int]]) -> None:
         """
-        Do not return anything, modify matrix in-place instead.
+            Simple approach
+            1. Traverse a quadrant of the matrix
+            2. Repeat 4 times the rotation (cause there's 4 quadrants)
+            3. Rotation include:
+                a. translate the index to relative to the center
+                b. rotate using a lookup table
+                c. translate back to original index
         """
         
         n = len(matrix)
@@ -29,7 +35,6 @@ class Solution:
             # swap x,y and include their new sign
             t_rotated = (abs(y) * new_sx, abs(x) * new_sy) 
             rotated = translate(t_rotated, center, origin)
-            # print(f'pos: {pos}, t_pos: {t_pos}, t_rotated: {t_rotated}, rotated: {rotated}')
             return int(rotated[0]), int(rotated[1])
         
         
@@ -44,15 +49,12 @@ class Solution:
         
         origin = (0,0)
         center = ((n-1)/2, (n-1)/2)
-        # print('CENTER: ', center)
         for cur in first_quadrant():
-            # print('--quadrant pos: ', cur)
             cur_val = get(matrix, cur)
             if cur == center: continue
 
             for _ in range(4):
                 nxt = rotate(cur)
-                # print('cur: ', cur, 'rotated: ', nxt)
                 temp = get(matrix, nxt)
                 matrix[nxt[0]][nxt[1]] = cur_val
                 
