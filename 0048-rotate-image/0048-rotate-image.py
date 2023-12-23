@@ -1,22 +1,16 @@
 class Solution:
     def rotate(self, matrix: List[List[int]]) -> None:
         """
-            Simple approach
+            Simple approach with updated rotate mechanism
             1. Traverse a quadrant of the matrix
             2. Repeat 4 times the rotation (cause there's 4 quadrants)
             3. Rotation include:
                 a. translate the index to relative to the center
-                b. rotate using a lookup table
+                b. rotate using math formula
                 c. translate back to original index
         """
         
         n = len(matrix)
-        ROTATE_TABLE = {
-            (-1, -1):   (-1, 1),
-            (-1, 1) :   (1, 1),
-            (1, 1)  :   (1, -1),
-            (1, -1) :   (-1, -1),
-        }
         
         def translate(pos, origin, new_origin):
             transpose_vector = (origin[0] - new_origin[0], origin[1] - new_origin[1])
@@ -25,15 +19,8 @@ class Solution:
 
         def rotate(pos):
             t_pos = translate(pos, origin, center)
-            # rotation logic (relative to translated center)
-            x,y = t_pos
-            sx = 1 if x > 0 else -1 # s is sign
-            sy = 1 if y > 0 else -1
-            
-            new_sx, new_sy = ROTATE_TABLE[(sx, sy)]
-            
-            # swap x,y and include their new sign
-            t_rotated = (abs(y) * new_sx, abs(x) * new_sy) 
+            # y, -x is rot 90 clock wise with x points down and y points right
+            t_rotated = (t_pos[1], -t_pos[0]) 
             rotated = translate(t_rotated, center, origin)
             return int(rotated[0]), int(rotated[1])
         
