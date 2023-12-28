@@ -13,8 +13,8 @@ class Solution:
             return i1 if i1[1] < i2[1] else i2
         
         prev = None
-        for i,interval in enumerate(intervals):
-            print(i)
+        for interval in intervals:
+            # print(i)
             if prev is None: 
                 prev = interval
             elif overlap(interval, prev): 
