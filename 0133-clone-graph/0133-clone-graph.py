@@ -10,13 +10,10 @@ from typing import Optional
 class Solution:
     def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:
         if not node: return 
-        res = {}
-        queue = collections.deque([node])
-        # done = set([1])
+        res = {node.val: Node(node.val)}
+        queue = [node]
         while queue:
-            cur = queue.popleft()
-            if cur.val not in res: res[cur.val] = Node(cur.val)
-                
+            cur = queue.pop()                
             copy = res[cur.val]
             for neighbor in cur.neighbors:
                 if neighbor.val not in res:
@@ -24,9 +21,6 @@ class Solution:
                     queue.append(neighbor)
                 copy.neighbors.append(res[neighbor.val])
                 
-                # if neighbor.val not in done: 
-                #     queue.append(neighbor)
-                #     done.add(neighbor.val)
                     
         return res[node.val]
             
