@@ -9,19 +9,15 @@ class Solution:
                 return True
             return False
         
-        def pick_shortest(i1, i2):
-            return i1 if i1[1] < i2[1] else i2
-        
+            
         prev = None
         for interval in intervals:
             # print(i)
-            if prev is None: 
+            if prev is None or prev[1] <= interval[0] or interval[1] <= interval[0]: 
                 prev = interval
-            elif overlap(interval, prev): 
+                continue
                 # print('overlap: ', prev, interval)
-                prev = pick_shortest(prev, interval)
-                # print('shortest: ', prev)
-                removed += 1
-            else:
-                prev = interval
+            prev = prev if prev[1] < interval[1] else interval
+            # print('shortest: ', prev)
+            removed += 1
         return removed
