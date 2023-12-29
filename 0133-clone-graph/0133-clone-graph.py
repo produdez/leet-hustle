@@ -12,7 +12,7 @@ class Solution:
         if not node: return 
         res = {}
         queue = collections.deque([node])
-        done = set([1])
+        # done = set([1])
         while queue:
             cur = queue.popleft()
             if cur.val not in res: res[cur.val] = Node(cur.val)
@@ -21,11 +21,12 @@ class Solution:
             for neighbor in cur.neighbors:
                 if neighbor.val not in res:
                     res[neighbor.val] = Node(neighbor.val)
+                    queue.append(neighbor)
                 copy.neighbors.append(res[neighbor.val])
                 
-                if neighbor.val not in done: 
-                    queue.append(neighbor)
-                    done.add(neighbor.val)
+                # if neighbor.val not in done: 
+                #     queue.append(neighbor)
+                #     done.add(neighbor.val)
                     
         return res[node.val]
             
