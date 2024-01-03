@@ -15,14 +15,13 @@ class Node:
 class Trie:
     def __init__(self):
         self.root = Node(None)
-        # self.print()
+
     def print(self): 
         print('-----')
         self.root.print()
         print('-----')
         
     def insert(self, word: str) -> None:
-        # print('insert: ', word)
         node = self.root
         for c in word:
             if c not in node.children:
@@ -31,7 +30,6 @@ class Trie:
             node = node.children[c]
         
         node.end = True
-        # self.print()
 
     
     def _searchPrefix(self,word):
@@ -40,16 +38,13 @@ class Trie:
             if c not in node.children:
                 return (node, False)
             node = node.children[c]
-        
-        # print('_prefix search for: ', word, ' found!')
         return (node, True)
+    
     def search(self, word: str) -> bool:
-        # print('search: ', word)
         node, contains = self._searchPrefix(word)
         return contains and node.isWord()
 
     def startsWith(self, prefix: str) -> bool:
-        # print('starts with?: ', prefix)
         _, contains = self._searchPrefix(prefix)
         return contains
         
