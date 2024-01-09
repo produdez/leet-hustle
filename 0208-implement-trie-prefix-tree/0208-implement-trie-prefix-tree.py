@@ -1,7 +1,7 @@
 class Node:
     def __init__(self, char):
         self.children = {}
-        self.char = char
+        self.char = char # Note: this is only for easy printing
         self.end = False
     def isRoot(self):
         return self.char == None
