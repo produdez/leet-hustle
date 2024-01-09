@@ -2,7 +2,7 @@ class Node:
     def __init__(self):
         self.end = False
         self.children = {}
-        self.word = None
+        # self.word = None
     def print(self, level=0):
         prefix = '  ' * level
         for char, children in self.children.items():
@@ -20,7 +20,7 @@ class Trie:
             node = node.children[char]
         
         node.end = True
-        node.word = word
+        # node.word = word
     
     def remove(self, word):
         def delete(i, node):
@@ -49,7 +49,7 @@ class Solution:
         result = set()
         visited = set()
         
-        def dfs(i, j, node):
+        def dfs(i, j, node, word):
             if i not in range(n) or j not in range(m): return
             if (i,j) in visited: return
             
@@ -58,19 +58,20 @@ class Solution:
 
             visited.add((i,j))
 
-            nxt = node.children[char]
-            if nxt.end: 
-                result.add(nxt.word)
-                dictionary.remove(nxt.word)
+            node = node.children[char]
+            word += char
+            if node.end: 
+                result.add(word)
+                dictionary.remove(word)
 
-            dfs(i, j-1, nxt)
-            dfs(i-1, j, nxt)
-            dfs(i, j+1, nxt)
-            dfs(i+1, j, nxt)            
+            dfs(i, j-1, node, word)
+            dfs(i-1, j, node, word)
+            dfs(i, j+1, node, word)
+            dfs(i+1, j, node, word)            
             visited.remove((i,j))
 
         for i in range(n):
             for j in range(m):
-                dfs(i,j, dictionary.root)
+                dfs(i,j, dictionary.root, '')
         
         return result
