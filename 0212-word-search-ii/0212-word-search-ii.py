@@ -23,18 +23,14 @@ class Trie:
         node.word = word
     
     def remove(self, word):
-        
         def delete(i, node):
-            if node.end: 
-                node.end = False
-                return len(node.children) == 0
-            if i >= len(word) or word[i] not in node.children:
-                raise Error("Bruh what the fuck")
-            
-            char = word[i]
-            if delete(i+1, node.children[char]):
-                node.children.pop(char)
-            
+            if node.end: node.end = False
+            elif i >= len(word) or word[i] not in node.children:
+                raise Error("Bruh what the fuck the word is not in dict?")
+            else:
+                char = word[i]
+                if delete(i+1, node.children[char]):
+                    node.children.pop(char)
             return len(node.children) == 0
         
         return delete(0, self.root)
@@ -48,55 +44,33 @@ class Solution:
         dictionary = Trie()
         for word in words:
             dictionary.add(word)
-        # dictionary.print()
         
         m, n = len(board[0]), len(board)
         result = set()
         visited = set()
         
         def dfs(i, j, node):
-            # print(i,j)
-            if i not in range(n) or j not in range(m): 
-                # print('out bound')
-                return
-            
-            # print(visited)
-            if (i,j) in visited: 
-                # print('visited already')
-                return
+            if i not in range(n) or j not in range(m): return
+            if (i,j) in visited: return
             
             char = board[i][j]
-            if char not in node.children: 
-                # print('not in dict')
-                return
+            if char not in node.children: return
 
-
-            
             visited.add((i,j))
-            
+
             nxt = node.children[char]
             if nxt.end: 
-                # print('END')
                 result.add(nxt.word)
                 dictionary.remove(nxt.word)
+
             dfs(i, j-1, nxt)
             dfs(i-1, j, nxt)
             dfs(i, j+1, nxt)
-            dfs(i+1, j, nxt)
-
-
-            
+            dfs(i+1, j, nxt)            
             visited.remove((i,j))
-        
-        # dictionary.add('oamie')
-        # dictionary.add('oamkk')
-        # dictionary.print()
-        # print('AFTER')
-        # dictionary.remove('oath')
+
         for i in range(n):
             for j in range(m):
-                # print('-dfs start at: ', i,j)
                 dfs(i,j, dictionary.root)
-        
         
         return result
