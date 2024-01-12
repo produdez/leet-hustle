@@ -1,24 +1,38 @@
 class Solution:
     def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
-        top, bot = 0, len(matrix) - 1
-        left, right = 0, len(matrix[0]) - 1
-        # Side: 0-top, 1-right, 2-bot, 3-left
-        res = []
-        while top <= bot and left <= right:
-            for j in range(left, right + 1):
-                res.append(matrix[top][j])
-            top += 1
-            for i in range(top, bot + 1):
-                res.append(matrix[i][right])
-            right -= 1
-
-            if top > bot or left > right: break
-            
-            for j in range(right, left -1 , -1):
-                res.append(matrix[bot][j])
-            bot -= 1
-            for i in range(bot, top - 1, -1):
-                res.append(matrix[i][left])
-            left += 1
+        n, m = len(matrix), len(matrix[0])
+        l,r,t,b = 0, m, 0, n
         
-        return res
+        result = []
+        while True: # intend that border is last index + 1
+            
+            # top
+            if t >= b: break
+            i = t
+            for j in range(l, r):
+                result.append(matrix[i][j])
+            t += 1
+            
+            # right
+            if l >= r: break
+            j = r - 1
+            for i in range(t, b):
+                result.append(matrix[i][j])
+            r -= 1
+            
+            # bot
+            if t >= b: break
+            i = b - 1
+            for j in reversed(range(l, r)):
+                result.append(matrix[i][j])
+            b -= 1
+            
+            # left
+            if l >= r: break
+            j = l
+            for i in reversed(range(t, b)):
+                result.append(matrix[i][j])
+            l += 1
+        
+        return result
+            
