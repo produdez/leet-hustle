@@ -1,7 +1,7 @@
 class Solution:
     def containsDuplicate(self, nums: List[int]) -> bool:
-        uniq = set()
-        for num in nums:
-            if num in uniq: return True
-            uniq.add(num)
+        # Sorting solution O(nlogn)
+        nums.sort()
+        for i in range(len(nums) - 1):
+            if nums[i] == nums[i+1]: return True
         return False
