@@ -5,10 +5,11 @@ class Solution:
         canEnd[-1] = True
         
         for i in reversed(range(n-1)):
-            maxJump = nums[i] if nums[i] < n - i - 1 else n - i - 1
-            for jump in range(1, maxJump + 1):
-                jumpTo = i + jump
-                if canEnd[jumpTo]:
+            if nums[i] > n - i - 1:
+                canEnd[i] = True
+                continue
+            for jump in range(1, nums[i] + 1):
+                if canEnd[i + jump]:
                     canEnd[i] = True
                     break
         return canEnd[0]
