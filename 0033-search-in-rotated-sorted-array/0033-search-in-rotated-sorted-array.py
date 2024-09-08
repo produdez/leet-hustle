@@ -7,19 +7,19 @@ class Solution:
             m = (l + r) // 2
             
             a,b,c = nums[l], nums[m], nums[r]
-            if a == target: return l
             if b == target: return m
-            if c == target: return r
             
             if a <= b:
-                if a < target < b:
-                    return binary(l, m)
-                else:
+                if target < a or target > b:
                     return binary(m+1, r)
+                else:
+                    return binary(l, m)
+
             else:
-                if b < target < c:
-                    return binary(m+1, r)
-                else:
+                if target < b or target > c:
                     return binary(l, m)
+                else:
+                    return binary(m+1, r)
+                    
 
         return binary(l,r)
