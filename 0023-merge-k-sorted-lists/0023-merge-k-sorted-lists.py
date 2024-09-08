@@ -4,51 +4,31 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    '''
-        Version: 2
-        Idea: Divide and Conquer
-        - Merge Two list at a time
-            Ex: 4 list size X -> 2 list size 2x 
-                -> 1 list size 4x
-        Complexity:
-        - Time: O(n.log(k))
-            1. Since k lists and we're merging half each
-                -> Log(k) merges
-            2. Algorithm runs through every node twice
-                -> 2n (2 cause once in child merges and
-                    another time at the last merge)
-            3. -> Total O(nlogk)
-        - Space: O(k/2) cause the first level of bottom up
-            div-conq store reference to the merged lists
-            which is half of original
-            -> O(k)
-    '''
     def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
         def merge(l1, l2):
-            dummy = curr = ListNode()
+            dummy = m = ListNode()
+            
             while l1 and l2:
-                if l1.val <= l2.val:
-                    curr.next = l1
+                if l1.val < l2.val:
+                    m.next = l1
                     l1 = l1.next
                 else:
-                    curr.next = l2
+                    m.next = l2
                     l2 = l2.next
-
-                curr = curr.next
-            curr.next = l1 if l1 else l2
+                m = m.next
+            if l1: m.next = l1
+            else: m.next = l2
+            
             return dummy.next
         
-        merged = lists
-        while len(merged) > 1:
-            new_merged = []
-            for i in range(0, len(merged), 2):
-                if i + 1 < len(merged):
-                    new_merged.append(merge(merged[i], merged[i+1]))
-                else:
-                    new_merged.append(merged[i])
-            merged = new_merged
+        if not lists: return None
+        while len(lists) > 1:
+            mergedLists = []
+            for i in range(0, len(lists), 2):
+                l1 = lists[i]
+                l2 = lists[i+1] if i + 1 < len(lists) else None
+                mergedLists.append(merge(l1,l2))
+            
+            lists = mergedLists
         
-        return merged[0] if merged else None
-        
-        
-        
+        return lists[0]
