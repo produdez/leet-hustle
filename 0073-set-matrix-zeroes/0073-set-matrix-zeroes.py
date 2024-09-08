@@ -1,25 +1,25 @@
 class Solution:
     def setZeroes(self, matrix: List[List[int]]) -> None:
-        """
-        Do not return anything, modify matrix in-place instead.
-        """
-        m, n = len(matrix[0]), len(matrix)
-        rows = [False] * n
-        cols = [False] * m
-        
-        for i in range(n):
-            for j in range(m):
-                if matrix[i][j] == 0:
-                    rows[i] = True
-                    cols[j] = True
-        for i in range(n):
-            if not rows[i]: continue
-            matrix[i] = [0] * m
-        for j in range(m):
-            if not cols[j]: continue
-            for i in range(n):
-                matrix[i][j] = 0
-                
+        def setNegative(i,j, value=None):
+            # set to -1
+            matrix[i][j] = value   
+            for k in range(len(matrix)):
+                if matrix[k][j] == 0:
+                    setNegative(k,j)
+                matrix[k][j] = value
+            for k in range(len(matrix[0])):
+                if matrix[i][k] == 0:
+                    setNegative(i,k)
+                matrix[i][k] = value
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                val = matrix[i][j]
+                if val != 0: continue
+                setNegative(i,j)
 
-                
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                if matrix[i][j] == None:
+                    matrix[i][j] = 0
         
+        return
