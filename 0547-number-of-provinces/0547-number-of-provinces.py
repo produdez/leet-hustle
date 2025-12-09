@@ -5,7 +5,7 @@ class Solution:
         rank = [1 for _ in range(n)]
         def find(i):
             if i == par[i]: return i
-            par[i] = par[par[i]]
+            # par[i] = par[par[i]]
             return find(par[i])
         def union(i,j):
             pi,pj = find(i), find(j)
@@ -14,6 +14,7 @@ class Solution:
                 rank[pj] += 1
             else:
                 par[pj] = pi
+                rank[pi] += 1
 
         count = n
         for i in range(n):
